@@ -1,7 +1,7 @@
 # Car-Customization-and-Purchasing-System
 This project is a Car Customization and Purchasing System! 🚗💻 Built with data structures &amp; algorithms, it offers seamless vehicle customization &amp; purchase.
 
-### | Contributors: [Liviru-Nava](https://github.com/SarithRanathunge) & [MR.NHIP](https://github.com/TharunPerera)
+### | Contributors: [SarithRanathunge](https://github.com/SarithRanathunge) & [TharunPerera](https://github.com/TharunPerera)
 
 ## Overview of the project (This project contain only part of the system only) 🔍🔍🔍🔍
 This Java Swing project revolves around a Car Customization and Purchasing system tailored for a specific section within the Porsche Company. It's designed using advanced data structures and algorithms.
