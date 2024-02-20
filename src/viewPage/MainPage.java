@@ -94,6 +94,7 @@ public class MainPage extends javax.swing.JFrame {
         setTitle("Main Page");
         setBounds(new java.awt.Rectangle(0, 0, 1080, 650));
         setMinimumSize(new java.awt.Dimension(1080, 650));
+        setResizable(false);
         setSize(new java.awt.Dimension(1080, 650));
 
         jPanel1.setAlignmentX(0.0F);
