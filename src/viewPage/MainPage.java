@@ -686,11 +686,37 @@ public class MainPage extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        cbxProduct.setSelectedIndex(0);
+        tfNewItem.setText("");
+        tfNewItemPrice.setText("");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        
+        int select = cbxProduct.getSelectedIndex();
+        if (select == 0) {
+            JOptionPane.showMessageDialog(this, "Sorry, the data could not be inserted into the database. Please try again.");
+        } else if (select == 1) {
+            String item = tfNewItem.getText(); // Use getText() instead of toString()
+            double price = Double.parseDouble(tfNewItemPrice.getText()); // Use getText() instead of toString()
+            bodyColorlist.insertAtEnd(item, price);
+        } else if (select == 2) {
+            String item = tfNewItem.getText(); // Use getText() instead of toString()
+            double price = Double.parseDouble(tfNewItemPrice.getText()); // Use getText() instead of toString()
+            rimAndTyersList.insertAtEnd(item, price);
+        } else if (select == 3) {
+            String item = tfNewItem.getText(); // Use getText() instead of toString()
+            double price = Double.parseDouble(tfNewItemPrice.getText()); // Use getText() instead of toString()
+            seatsList.insertAtEnd(item, price);
+        } else if (select == 4) {
+            String item = tfNewItem.getText(); // Use getText() instead of toString()
+            double price = Double.parseDouble(tfNewItemPrice.getText()); // Use getText() instead of toString()
+            lightList.insertAtEnd(item, price);
+        }
+        JOptionPane.showMessageDialog(this, "Data saved suuccsessfully.");
+        cbxProduct.setSelectedIndex(0);
+        tfNewItem.setText("");
+        tfNewItemPrice.setText("");
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnAdminOnlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminOnlyActionPerformed
