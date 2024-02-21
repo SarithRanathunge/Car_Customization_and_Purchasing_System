@@ -62,6 +62,39 @@ public class CustomizationPage extends javax.swing.JFrame {
 //        insertLights();
         
     }
+    
+    public CustomizationPage( String name, double price, DoublyLinkedList bodyColorlist, DoublyLinkedList rimAndTyersList, DoublyLinkedList seatsList, DoublyLinkedList lightList) {
+        initComponents();
+        setVehical(name, price);
+        setDate();
+        times();
+        setIcon();
+        reSizeTableColumn();
+        this.importDay = importDay;
+
+
+        this.bodyColorlist = bodyColorlist;
+        this.rimAndTyersList = rimAndTyersList;
+        this.seatsList = seatsList;
+        this.lightList = lightList;
+
+        this.bodyColor = false;
+        this.rimAndTyers = false;
+        this.seats = false;
+        this.lights = false;
+
+        
+
+//        insertBodyColor();
+//        insertRimandTyers();
+//        insertSeats();
+//        insertLights();
+    }
+    
+    public final void setVehical(String name, double price) {
+        DefaultTableModel tableModel = (DefaultTableModel) tblBill.getModel();
+        tableModel.addRow(new Object[]{name, price});
+    }
 
     public CustomizationPage(String name, double price ) {
         initComponents();
@@ -81,11 +114,6 @@ public class CustomizationPage extends javax.swing.JFrame {
         TableColumnModel columnModel1 = tblBill.getColumnModel();
         columnModel1.getColumn(0).setPreferredWidth(150);
         columnModel1.getColumn(1).setPreferredWidth(100);
-    }
-
-    public final void setVehical(String name, double price) {
-        DefaultTableModel tableModel = (DefaultTableModel) tblBill.getModel();
-        tableModel.addRow(new Object[]{name, price});
     }
 
     public final void setDate() {

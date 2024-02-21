@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import DoublyLinkedList.DoublyLinkedList;
 import javax.swing.JOptionPane;
 
+
 /**
  *
  * @author Sarith
@@ -18,7 +19,10 @@ public class MainPage extends javax.swing.JFrame {
     int[][] graph;
     String[] locations;
 
-    
+    DoublyLinkedList bodyColorlist = new DoublyLinkedList();
+    DoublyLinkedList rimAndTyersList = new DoublyLinkedList();
+    DoublyLinkedList seatsList = new DoublyLinkedList();
+    DoublyLinkedList lightList = new DoublyLinkedList();
     /**
      * Creates new form MainPage
      */
@@ -26,7 +30,68 @@ public class MainPage extends javax.swing.JFrame {
         initComponents();
         scaleImage();
         AddNewItemsPanel.setVisible(false);
+        
+        insertBodyColor();
+        insertRimandTyers();
+        insertSeats();
+        insertLights();
        
+    }
+    
+    public final void insertBodyColor() {
+        bodyColorlist.insertAtEnd("Red", 25000.00);
+        bodyColorlist.insertAtEnd("orange", 50000.00);
+        bodyColorlist.insertAtEnd("Chocolate", 22000.00);
+        bodyColorlist.insertAtEnd("Green", 15000.00);
+        bodyColorlist.insertAtEnd("Blue", 12000.00);
+        bodyColorlist.insertAtEnd("Yellow", 32600.00);
+        bodyColorlist.insertAtEnd("Black", 41000.00);
+        bodyColorlist.insertAtEnd("White", 32000.00);
+        bodyColorlist.insertAtEnd("Purple", 55000.00);
+        bodyColorlist.insertAtEnd("Gold", 100000.00);
+        bodyColorlist.insertAtEnd("Black", 41000.00);
+
+    }
+    
+    public final void insertRimandTyers() {
+        rimAndTyersList.insertAtEnd("Golden Rim and Tyer", 2500.00);
+        rimAndTyersList.insertAtEnd("Danlop Tyer", 500.00);
+        rimAndTyersList.insertAtEnd("Silver Rim and Tyer", 9500.00);
+        rimAndTyersList.insertAtEnd("Metal Rim", 5600.00);
+        rimAndTyersList.insertAtEnd("Carbon fiber Rim and Tyer", 4000.00);
+        rimAndTyersList.insertAtEnd("Silver Mix Rim and Tyer", 3500.00);
+        rimAndTyersList.insertAtEnd("DSI Tyer", 3000.00);
+        rimAndTyersList.insertAtEnd("DSI Tyer", 7000.00);
+        rimAndTyersList.insertAtEnd("Super Rim and Tyer", 3000.00);
+
+    }
+
+    public final void insertSeats() {
+        seatsList.insertAtEnd("Bucket Seat", 2000.00);
+        seatsList.insertAtEnd("Bench Seat", 3000.00);
+        seatsList.insertAtEnd("Captain's Chair", 3200.00);
+        seatsList.insertAtEnd("Reclining Seat", 1200.00);
+        seatsList.insertAtEnd("Split-Folding Seat", 5200.00);
+        seatsList.insertAtEnd("Heated Seat", 6200.00);
+        seatsList.insertAtEnd("Ventilated Seat", 1200.00);
+        seatsList.insertAtEnd("Power-Adjustable Seat", 7500.00);
+        seatsList.insertAtEnd("Massaging Seat", 9500.00);
+        seatsList.insertAtEnd("Stow 'n Go Seat", 2650.00);
+        seatsList.insertAtEnd("Booster Seat", 8942.00);
+        seatsList.insertAtEnd("Child Safety Seat", 3216.00);
+    }
+
+    public final void insertLights() {
+        lightList.insertAtEnd("Headlights", 2100.00);
+        lightList.insertAtEnd("Taillights", 3265.00);
+        lightList.insertAtEnd("Brake Lights", 5210.00);
+        lightList.insertAtEnd("Turn Signal Lights", 4125.00);
+        lightList.insertAtEnd("Reverse Lights", 3267.00);
+        lightList.insertAtEnd("Fog Lights", 2851.00);
+        lightList.insertAtEnd("Daytime Running Lights", 2358.00);
+        lightList.insertAtEnd("Interior Lights", 9851.00);
+        lightList.insertAtEnd("Parking Lights", 1258.00);
+        lightList.insertAtEnd("Hazard Lights", 3269.00);
     }
 
     public final void scaleImage() {
@@ -556,27 +621,63 @@ public class MainPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
-        
+        String name = "Porsche 911 GT3 RS";
+        double price = 112326.00;
+        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        carOne.setVisible(true);
+        carOne.pack();
+        carOne.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
-        
+        String name = "Porsche 911 Turdo";
+        double price = 214326.00;
+        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        carOne.setVisible(true);
+        carOne.pack();
+        carOne.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jPanel3MouseClicked
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
-        
+        String name = "Porsche 911 Turdo";
+        double price = 214326.00;
+        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        carOne.setVisible(true);
+        carOne.pack();
+        carOne.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jPanel4MouseClicked
 
     private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
-        
+        String name = "Porsche 911 Carrera T";
+        double price = 111316.00;
+        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        carOne.setVisible(true);
+        carOne.pack();
+        carOne.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jPanel5MouseClicked
 
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
-        
+        String name = "Porsche 911 Turbo Cabriolet";
+        double price = 211316.00;
+        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        carOne.setVisible(true);
+        carOne.pack();
+        carOne.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jPanel6MouseClicked
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
-        
+        String name = "Porsche 911 Dakar";
+        double price = 163259.00;
+        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        carOne.setVisible(true);
+        carOne.pack();
+        carOne.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jPanel7MouseClicked
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
