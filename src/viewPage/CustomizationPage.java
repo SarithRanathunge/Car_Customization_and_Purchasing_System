@@ -91,6 +91,28 @@ public class CustomizationPage extends javax.swing.JFrame {
 //        insertLights();
     }
     
+    public void bye() {
+        TableColumnModel columnModel = tblSelectItem.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(150);
+        columnModel.getColumn(1).setPreferredWidth(50);
+
+        TableColumnModel columnModel1 = tblBill.getColumnModel();
+        columnModel1.getColumn(0).setPreferredWidth(150);
+        columnModel1.getColumn(1).setPreferredWidth(100);
+    }
+
+    public final void hello(String name, double price) {
+        DefaultTableModel tableModel = (DefaultTableModel) tblBill.getModel();
+        tableModel.addRow(new Object[]{name, price});
+    }
+
+    public final void goodnight() {
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String dd = sdf.format(d);
+        lblDate.setText(dd);
+    }
+    
     public final void setVehical(String name, double price) {
         DefaultTableModel tableModel = (DefaultTableModel) tblBill.getModel();
         tableModel.addRow(new Object[]{name, price});
