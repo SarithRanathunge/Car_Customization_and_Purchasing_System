@@ -58,6 +58,16 @@ public class CustomizationPage extends javax.swing.JFrame {
 //        insertRimandTyers();
 //        insertSeats();
 //        insertLights();
+        locations = new String[]{"Porsche Branch", "Gallface", "Townhall", "Kollupitiya", "Bambalapitya", "Dematagoda", "Wellawatte", "Havelock Road", "Maharagama", "Nugegoda", "Piliyandala", "Nawala", "Narahenpita", "Borella", "Galle"};
+
+        tblSelectItem.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    addToBill();
+                }
+            }
+        });
     }
 
     public CustomizationPage(String name, double price, DoublyLinkedList bodyColorlist, DoublyLinkedList rimAndTyersList, DoublyLinkedList seatsList, DoublyLinkedList lightList) {
@@ -83,6 +93,17 @@ public class CustomizationPage extends javax.swing.JFrame {
 //        insertRimandTyers();
 //        insertSeats();
 //        insertLights();
+
+        locations = new String[]{"Porsche Branch", "Gallface", "Townhall", "Kollupitiya", "Bambalapitya", "Dematagoda", "Wellawatte", "Havelock Road", "Maharagama", "Nugegoda", "Piliyandala", "Nawala", "Narahenpita", "Borella", "Galle"};
+
+        tblSelectItem.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    addToBill();
+                }
+            }
+        });
     }
 
     public void bye() {
@@ -152,6 +173,58 @@ public class CustomizationPage extends javax.swing.JFrame {
         });
 
         t.start();
+    }
+
+    public void addToBill() {
+        int selectedRow = tblSelectItem.getSelectedRow();
+        if (selectedRow == -1) {
+            // No row is selected, handle this case accordingly
+            return;
+        }
+
+        String item = tblSelectItem.getValueAt(selectedRow, 0).toString();
+        double price = Double.parseDouble(tblSelectItem.getValueAt(selectedRow, 1).toString());
+
+        DefaultTableModel tableModel = (DefaultTableModel) tblBill.getModel();
+        tableModel.addRow(new Object[]{item, price});
+
+        // Optionally, you can update the total price after adding the row
+        updateTotalPrice();
+        updateAdvacePrice();
+        updatePrice();
+    }
+
+    public void updateTotalPrice() {
+        double total = 0.0;
+        for (int row = 0; row < tblBill.getRowCount(); row++) {
+            double price = Double.parseDouble(tblBill.getValueAt(row, 1).toString());
+            total += price;
+        }
+        lblTotalPrice.setText(String.valueOf(total));
+    }
+
+    public void updateAdvacePrice() {
+        double total = 0.0;
+        double discount = 0.0;
+        for (int row = 0; row < tblBill.getRowCount(); row++) {
+            double price = Double.parseDouble(tblBill.getValueAt(row, 1).toString());
+            discount = price * 0.3;
+            total += discount;
+        }
+        lblAdvance.setText(String.valueOf(total));
+    }
+
+    public void updatePrice() {
+        double total = 0.0;
+        double discount = 0.0;
+        double subTotal = 0.0;
+        for (int row = 0; row < tblBill.getRowCount(); row++) {
+            double price = Double.parseDouble(tblBill.getValueAt(row, 1).toString());
+            total += price;
+            discount = price * 0.3;
+            subTotal = total - discount;
+        }
+        lblPrice.setText(String.valueOf(subTotal));
     }
 
     /**
