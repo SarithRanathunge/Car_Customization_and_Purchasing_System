@@ -39,7 +39,6 @@ public class CustomizationPage extends javax.swing.JFrame {
     DoublyLinkedList seatsList = new DoublyLinkedList();
     DoublyLinkedList lightList = new DoublyLinkedList();
 
-
     /**
      * Creates new form Car
      */
@@ -55,15 +54,13 @@ public class CustomizationPage extends javax.swing.JFrame {
         this.seats = false;
         this.lights = false;
 
-
 //        insertBodyColor();
 //        insertRimandTyers();
 //        insertSeats();
 //        insertLights();
-        
     }
-    
-    public CustomizationPage( String name, double price, DoublyLinkedList bodyColorlist, DoublyLinkedList rimAndTyersList, DoublyLinkedList seatsList, DoublyLinkedList lightList) {
+
+    public CustomizationPage(String name, double price, DoublyLinkedList bodyColorlist, DoublyLinkedList rimAndTyersList, DoublyLinkedList seatsList, DoublyLinkedList lightList) {
         initComponents();
         setVehical(name, price);
         setDate();
@@ -71,7 +68,6 @@ public class CustomizationPage extends javax.swing.JFrame {
         setIcon();
         reSizeTableColumn();
         this.importDay = importDay;
-
 
         this.bodyColorlist = bodyColorlist;
         this.rimAndTyersList = rimAndTyersList;
@@ -83,14 +79,12 @@ public class CustomizationPage extends javax.swing.JFrame {
         this.seats = false;
         this.lights = false;
 
-        
-
 //        insertBodyColor();
 //        insertRimandTyers();
 //        insertSeats();
 //        insertLights();
     }
-    
+
     public void bye() {
         TableColumnModel columnModel = tblSelectItem.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(150);
@@ -112,13 +106,13 @@ public class CustomizationPage extends javax.swing.JFrame {
         String dd = sdf.format(d);
         lblDate.setText(dd);
     }
-    
+
     public final void setVehical(String name, double price) {
         DefaultTableModel tableModel = (DefaultTableModel) tblBill.getModel();
         tableModel.addRow(new Object[]{name, price});
     }
 
-    public CustomizationPage(String name, double price ) {
+    public CustomizationPage(String name, double price) {
         initComponents();
         setVehical(name, price);
         setDate();
@@ -948,45 +942,115 @@ public class CustomizationPage extends javax.swing.JFrame {
 
     private void rbtnMaxPriceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnMaxPriceMouseClicked
 //        System.out.println("Max");
-        
+
     }//GEN-LAST:event_rbtnMaxPriceMouseClicked
 
     private void rbtnMinPriceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnMinPriceMouseClicked
 //        System.out.println("Min");
-        
+
     }//GEN-LAST:event_rbtnMinPriceMouseClicked
 
     private void rbtnAtoZMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnAtoZMouseClicked
 //        System.out.println("A to Z");
-        
+
     }//GEN-LAST:event_rbtnAtoZMouseClicked
 
     private void rbtnZtoAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnZtoAMouseClicked
 //        System.out.println("Z to A");
-        
+
     }//GEN-LAST:event_rbtnZtoAMouseClicked
 
+    public void addBodycolorToTable() {
+
+        DefaultTableModel tableModel = (DefaultTableModel) tblSelectItem.getModel();
+        tableModel.setRowCount(0);
+        Node currentNode = bodyColorlist.head;
+        Node tail = bodyColorlist.tail;
+
+        while (currentNode != tail) {
+            tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
+            currentNode = currentNode.next;
+        }
+        tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
+    }
+
     private void btnBodyColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBodyColorActionPerformed
-        
+        addBodycolorToTable();
+        bodyColor = true;
+        rimAndTyers = false;
+        seats = false;
+        lights = false;
     }//GEN-LAST:event_btnBodyColorActionPerformed
 
     private void tftelephoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tftelephoneActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tftelephoneActionPerformed
+    public void addRimAndTyerToTable() {
 
+        DefaultTableModel tableModel = (DefaultTableModel) tblSelectItem.getModel();
+        tableModel.setRowCount(0);
+        Node currentNode = rimAndTyersList.head;
+        Node tail = rimAndTyersList.tail;
+
+        while (currentNode != tail) {
+            tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
+            currentNode = currentNode.next;
+        }
+        tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
+    }
+
+    public void addSeatsToTable() {
+
+        DefaultTableModel tableModel = (DefaultTableModel) tblSelectItem.getModel();
+        tableModel.setRowCount(0);
+        Node currentNode = seatsList.head;
+        Node tail = seatsList.tail;
+
+        while (currentNode != tail) {
+            tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
+            currentNode = currentNode.next;
+        }
+        tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
+    }
+
+    public void addLightsToTable() {
+
+        DefaultTableModel tableModel = (DefaultTableModel) tblSelectItem.getModel();
+        tableModel.setRowCount(0);
+        Node currentNode = lightList.head;
+        Node tail = lightList.tail;
+
+        while (currentNode != tail) {
+            tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
+            currentNode = currentNode.next;
+        }
+        tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
+    }
     private void btnRimAndTyersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRimAndTyersActionPerformed
         // TODO add your handling code here:
-        
+        addRimAndTyerToTable();
+        bodyColor = false;
+        rimAndTyers = true;
+        seats = false;
+        lights = false;
     }//GEN-LAST:event_btnRimAndTyersActionPerformed
 
     private void btnSeatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeatsActionPerformed
         // TODO add your handling code here:
-        
+        addSeatsToTable();
+        bodyColor = false;
+        rimAndTyers = false;
+        seats = true;
+        lights = false;
     }//GEN-LAST:event_btnSeatsActionPerformed
 
     private void btnLightsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLightsActionPerformed
         // TODO add your handling code here:
-        
+        addLightsToTable();
+        bodyColor = false;
+        rimAndTyers = false;
+        seats = false;
+        lights = true;
     }//GEN-LAST:event_btnLightsActionPerformed
 
     public final void setIcon() {
@@ -1010,15 +1074,14 @@ public class CustomizationPage extends javax.swing.JFrame {
 
     private void btnClearAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearAllActionPerformed
         // TODO add your handling code here:
-        
+
 
     }//GEN-LAST:event_btnClearAllActionPerformed
 
-    
 
     private void btnOrderNow1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderNow1ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnOrderNow1ActionPerformed
 
     private void tfCityPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tfCityPropertyChange
@@ -1033,7 +1096,7 @@ public class CustomizationPage extends javax.swing.JFrame {
 
     private void tfAddressMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tfAddressMouseClicked
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_tfAddressMouseClicked
 
     /**
