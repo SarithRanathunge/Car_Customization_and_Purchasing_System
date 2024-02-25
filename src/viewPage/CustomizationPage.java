@@ -93,7 +93,6 @@ public class CustomizationPage extends javax.swing.JFrame {
 //        insertRimandTyers();
 //        insertSeats();
 //        insertLights();
-
         locations = new String[]{"Porsche Branch", "Gallface", "Townhall", "Kollupitiya", "Bambalapitya", "Dematagoda", "Wellawatte", "Havelock Road", "Maharagama", "Nugegoda", "Piliyandala", "Nawala", "Narahenpita", "Borella", "Galle"};
 
         tblSelectItem.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -1015,22 +1014,71 @@ public class CustomizationPage extends javax.swing.JFrame {
 
     private void rbtnMaxPriceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnMaxPriceMouseClicked
 //        System.out.println("Max");
+        if (bodyColor == true) {
+            bodyColorlist.mergeSortMaxToMin();
+            addBodycolorToTable();
+        } else if (rimAndTyers == true) {
+            rimAndTyersList.mergeSortMaxToMin();
+            addRimAndTyerToTable();
+        } else if (seats == true) {
+            seatsList.mergeSortMaxToMin();
+            addSeatsToTable();
+        } else if (lights == true) {
+            lightList.mergeSortMaxToMin();
+            addLightsToTable();
+        }
 
     }//GEN-LAST:event_rbtnMaxPriceMouseClicked
 
     private void rbtnMinPriceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnMinPriceMouseClicked
 //        System.out.println("Min");
-
+        if (bodyColor == true) {
+            bodyColorlist.mergeSortMinToMax();
+            addBodycolorToTable();
+        } else if (rimAndTyers == true) {
+            rimAndTyersList.mergeSortMinToMax();
+            addRimAndTyerToTable();
+        } else if (seats == true) {
+            seatsList.mergeSortMinToMax();
+            addSeatsToTable();
+        } else if (lights == true) {
+            lightList.mergeSortMinToMax();
+            addLightsToTable();
+        }
     }//GEN-LAST:event_rbtnMinPriceMouseClicked
 
     private void rbtnAtoZMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnAtoZMouseClicked
 //        System.out.println("A to Z");
-
+        if (bodyColor == true) {
+            bodyColorlist.mergeSortAToZ();
+            addBodycolorToTable();
+        } else if (rimAndTyers == true) {
+            rimAndTyersList.mergeSortAToZ();
+            addRimAndTyerToTable();
+        } else if (seats == true) {
+            seatsList.mergeSortAToZ();
+            addSeatsToTable();
+        } else if (lights == true) {
+            lightList.mergeSortAToZ();
+            addLightsToTable();
+        }
     }//GEN-LAST:event_rbtnAtoZMouseClicked
 
     private void rbtnZtoAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnZtoAMouseClicked
 //        System.out.println("Z to A");
-
+        if (bodyColor == true) {
+            bodyColorlist.mergeSortZToA();
+            addBodycolorToTable();
+        } else if (rimAndTyers == true) {
+            rimAndTyersList.mergeSortZToA();
+            addRimAndTyerToTable();
+        } else if (seats == true) {
+            seatsList.mergeSortZToA();
+            addSeatsToTable();
+        } else if (lights == true) {
+            lightList.mergeSortZToA();
+            addLightsToTable();
+        }
     }//GEN-LAST:event_rbtnZtoAMouseClicked
 
     public void addBodycolorToTable() {
