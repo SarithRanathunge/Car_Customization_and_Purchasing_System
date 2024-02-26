@@ -54,6 +54,27 @@ public class CustomizationPage extends javax.swing.JFrame {
         this.rimAndTyers = false;
         this.seats = false;
         this.lights = false;
+        
+        graph = new int[][]{
+            {0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Vito Pizza
+            {8, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Gallface
+            {0, 7, 0, 9, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Townhall
+            {0, 0, 9, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Kollupitiya
+            {0, 0, 3, 4, 0, 12, 5, 0, 0, 0, 0, 0, 0, 0, 0}, // Bambalapitya
+            {0, 0, 0, 0, 12, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0}, // Dematagoda
+            {0, 0, 0, 0, 5, 3, 0, 5, 5, 0, 0, 0, 0, 0, 0}, // Wellawatte
+            {0, 0, 0, 0, 0, 3, 5, 0, 3, 0, 0, 0, 0, 0, 0}, // Havelock Road
+            {0, 0, 0, 0, 0, 0, 5, 3, 0, 10, 5, 0, 0, 0, 0}, // Maharagama
+            {0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 3, 3, 0, 0, 0}, // Nugegoda
+            {0, 0, 0, 0, 0, 0, 0, 0, 5, 3, 0, 5, 3, 0, 0}, // Piliyandala
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 5, 0, 12, 0, 0}, // Nawala
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 12, 0, 5, 0}, // Narahenpita
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 3}, // Borella
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 0} // Galle
+        };
+
+        // Array of location names
+        locations = new String[]{"Porsche Branch", "Gallface", "Townhall", "Kollupitiya", "Bambalapitya", "Dematagoda", "Wellawatte", "Havelock Road", "Maharagama", "Nugegoda", "Piliyandala", "Nawala", "Narahenpita", "Borella", "Galle"};
 
 //        insertBodyColor();
 //        insertRimandTyers();
@@ -1255,7 +1276,7 @@ public class CustomizationPage extends javax.swing.JFrame {
 
     private void btnBodyColorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBodyColorMouseEntered
         // TODO add your handling code here:
-         btnBodyColor.setBackground(Color.white);
+        btnBodyColor.setBackground(Color.white);
 
         // Change text color
         btnBodyColor.setForeground(Color.darkGray);
@@ -1287,7 +1308,7 @@ public class CustomizationPage extends javax.swing.JFrame {
 
     private void btnSeatsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSeatsMouseEntered
         // TODO add your handling code here:
-         btnSeats.setBackground(Color.white);
+        btnSeats.setBackground(Color.white);
 
         // Change text color
         btnSeats.setForeground(Color.darkGray);

@@ -38,7 +38,27 @@ public class MainPage extends javax.swing.JFrame {
         insertSeats();
         insertLights();
         color();
-       
+       graph = new int[][]{
+            {0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Sri Lanka
+            {8, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // India
+            {0, 7, 0, 9, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // China
+            {0, 0, 9, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Malasiya
+            {0, 0, 3, 4, 0, 12, 5, 0, 0, 0, 0, 0, 0, 0, 0}, // Thailand
+            {0, 0, 0, 0, 12, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0}, // Japan
+            {0, 0, 0, 0, 5, 3, 0, 5, 5, 0, 0, 0, 0, 0, 0}, // South Korea
+            {0, 0, 0, 0, 0, 3, 5, 0, 3, 0, 0, 0, 0, 0, 0}, // Russia
+            {0, 0, 0, 0, 0, 0, 5, 3, 0, 10, 5, 0, 0, 0, 0}, // USA
+            {0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 3, 3, 0, 0, 0}, // Newzeland
+            {0, 0, 0, 0, 0, 0, 0, 0, 5, 3, 0, 5, 3, 0, 0}, // Canada
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 5, 0, 12, 0, 0}, // England
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 12, 0, 5, 0}, // France
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 3}, // Denmark
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 0} // Netherland
+        };
+
+        // Array of location names
+        locations = new String[]{"Sri_Lanka", "India", "China", "Malasiya", "Thailand", "Japan", "South_Korea", "Russia", "USA", "Newzeland", "Canada", "England", "France", "Denmark", "Netherland"};
+
     }
     
     public void color() {
