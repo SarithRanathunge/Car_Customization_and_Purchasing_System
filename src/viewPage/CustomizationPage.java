@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.swing.Timer;
 import DoublyLinkedList.DoublyLinkedList;
 import DoublyLinkedList.Node;
+import java.awt.Color;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -723,6 +724,14 @@ public class CustomizationPage extends javax.swing.JFrame {
         btnBodyColor.setMaximumSize(new java.awt.Dimension(120, 40));
         btnBodyColor.setMinimumSize(new java.awt.Dimension(120, 40));
         btnBodyColor.setPreferredSize(new java.awt.Dimension(120, 40));
+        btnBodyColor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnBodyColorMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnBodyColorMouseExited(evt);
+            }
+        });
         btnBodyColor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBodyColorActionPerformed(evt);
@@ -738,6 +747,14 @@ public class CustomizationPage extends javax.swing.JFrame {
         btnSeats.setMaximumSize(new java.awt.Dimension(120, 40));
         btnSeats.setMinimumSize(new java.awt.Dimension(120, 40));
         btnSeats.setPreferredSize(new java.awt.Dimension(120, 40));
+        btnSeats.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSeatsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSeatsMouseExited(evt);
+            }
+        });
         btnSeats.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSeatsActionPerformed(evt);
@@ -753,6 +770,14 @@ public class CustomizationPage extends javax.swing.JFrame {
         btnLights.setMaximumSize(new java.awt.Dimension(120, 40));
         btnLights.setMinimumSize(new java.awt.Dimension(120, 40));
         btnLights.setPreferredSize(new java.awt.Dimension(120, 40));
+        btnLights.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnLightsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLightsMouseExited(evt);
+            }
+        });
         btnLights.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLightsActionPerformed(evt);
@@ -768,6 +793,14 @@ public class CustomizationPage extends javax.swing.JFrame {
         btnRimAndTyers.setMaximumSize(new java.awt.Dimension(120, 40));
         btnRimAndTyers.setMinimumSize(new java.awt.Dimension(120, 40));
         btnRimAndTyers.setPreferredSize(new java.awt.Dimension(120, 40));
+        btnRimAndTyers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRimAndTyersMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRimAndTyersMouseExited(evt);
+            }
+        });
         btnRimAndTyers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRimAndTyersActionPerformed(evt);
@@ -1219,6 +1252,70 @@ public class CustomizationPage extends javax.swing.JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_tfAddressMouseClicked
+
+    private void btnBodyColorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBodyColorMouseEntered
+        // TODO add your handling code here:
+         btnBodyColor.setBackground(Color.white);
+
+        // Change text color
+        btnBodyColor.setForeground(Color.darkGray);
+    }//GEN-LAST:event_btnBodyColorMouseEntered
+
+    private void btnBodyColorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBodyColorMouseExited
+        // TODO add your handling code here:
+        btnBodyColor.setBackground(Color.darkGray);
+
+        // Change text color
+        btnBodyColor.setForeground(Color.white);
+    }//GEN-LAST:event_btnBodyColorMouseExited
+
+    private void btnRimAndTyersMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRimAndTyersMouseEntered
+        // TODO add your handling code here:
+        btnRimAndTyers.setBackground(Color.white);
+
+        // Change text color
+        btnRimAndTyers.setForeground(Color.darkGray);
+    }//GEN-LAST:event_btnRimAndTyersMouseEntered
+
+    private void btnRimAndTyersMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRimAndTyersMouseExited
+        // TODO add your handling code here:
+        btnRimAndTyers.setBackground(Color.darkGray);
+
+        // Change text color
+        btnRimAndTyers.setForeground(Color.white);
+    }//GEN-LAST:event_btnRimAndTyersMouseExited
+
+    private void btnSeatsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSeatsMouseEntered
+        // TODO add your handling code here:
+         btnSeats.setBackground(Color.white);
+
+        // Change text color
+        btnSeats.setForeground(Color.darkGray);
+    }//GEN-LAST:event_btnSeatsMouseEntered
+
+    private void btnSeatsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSeatsMouseExited
+        // TODO add your handling code here:
+        btnSeats.setBackground(Color.darkGray);
+
+        // Change text color
+        btnSeats.setForeground(Color.white);
+    }//GEN-LAST:event_btnSeatsMouseExited
+
+    private void btnLightsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLightsMouseEntered
+        // TODO add your handling code here:
+        btnLights.setBackground(Color.white);
+
+        // Change text color
+        btnLights.setForeground(Color.darkGray);
+    }//GEN-LAST:event_btnLightsMouseEntered
+
+    private void btnLightsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLightsMouseExited
+        // TODO add your handling code here:
+        btnLights.setBackground(Color.darkGray);
+
+        // Change text color
+        btnLights.setForeground(Color.white);
+    }//GEN-LAST:event_btnLightsMouseExited
 
     /**
      * @param args the command line arguments
