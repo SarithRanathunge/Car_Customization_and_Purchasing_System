@@ -7,7 +7,10 @@ package viewPage;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import DoublyLinkedList.DoublyLinkedList;
+import java.awt.Color;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -18,7 +21,10 @@ public class MainPage extends javax.swing.JFrame {
     int[][] graph;
     String[] locations;
 
-    
+    DoublyLinkedList bodyColorlist = new DoublyLinkedList();
+    DoublyLinkedList rimAndTyersList = new DoublyLinkedList();
+    DoublyLinkedList seatsList = new DoublyLinkedList();
+    DoublyLinkedList lightList = new DoublyLinkedList();
     /**
      * Creates new form MainPage
      */
@@ -26,7 +32,74 @@ public class MainPage extends javax.swing.JFrame {
         initComponents();
         scaleImage();
         AddNewItemsPanel.setVisible(false);
+        
+        insertBodyColor();
+        insertRimandTyers();
+        insertSeats();
+        insertLights();
+        color();
        
+    }
+    
+    public void color() {
+        tfNewItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        tfNewItemPrice.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    }
+    
+    public final void insertBodyColor() {
+        bodyColorlist.insertAtEnd("Red", 25000.00);
+        bodyColorlist.insertAtEnd("orange", 50000.00);
+        bodyColorlist.insertAtEnd("Chocolate", 22000.00);
+        bodyColorlist.insertAtEnd("Green", 15000.00);
+        bodyColorlist.insertAtEnd("Blue", 12000.00);
+        bodyColorlist.insertAtEnd("Yellow", 32600.00);
+        bodyColorlist.insertAtEnd("Black", 41000.00);
+        bodyColorlist.insertAtEnd("White", 32000.00);
+        bodyColorlist.insertAtEnd("Purple", 55000.00);
+        bodyColorlist.insertAtEnd("Gold", 100000.00);
+        bodyColorlist.insertAtEnd("Black", 41000.00);
+
+    }
+    
+    public final void insertRimandTyers() {
+        rimAndTyersList.insertAtEnd("Golden Rim and Tyer", 2500.00);
+        rimAndTyersList.insertAtEnd("Danlop Tyer", 500.00);
+        rimAndTyersList.insertAtEnd("Silver Rim and Tyer", 9500.00);
+        rimAndTyersList.insertAtEnd("Metal Rim", 5600.00);
+        rimAndTyersList.insertAtEnd("Carbon fiber Rim and Tyer", 4000.00);
+        rimAndTyersList.insertAtEnd("Silver Mix Rim and Tyer", 3500.00);
+        rimAndTyersList.insertAtEnd("DSI Tyer", 3000.00);
+        rimAndTyersList.insertAtEnd("DSI Tyer", 7000.00);
+        rimAndTyersList.insertAtEnd("Super Rim and Tyer", 3000.00);
+
+    }
+
+    public final void insertSeats() {
+        seatsList.insertAtEnd("Bucket Seat", 2000.00);
+        seatsList.insertAtEnd("Bench Seat", 3000.00);
+        seatsList.insertAtEnd("Captain's Chair", 3200.00);
+        seatsList.insertAtEnd("Reclining Seat", 1200.00);
+        seatsList.insertAtEnd("Split-Folding Seat", 5200.00);
+        seatsList.insertAtEnd("Heated Seat", 6200.00);
+        seatsList.insertAtEnd("Ventilated Seat", 1200.00);
+        seatsList.insertAtEnd("Power-Adjustable Seat", 7500.00);
+        seatsList.insertAtEnd("Massaging Seat", 9500.00);
+        seatsList.insertAtEnd("Stow 'n Go Seat", 2650.00);
+        seatsList.insertAtEnd("Booster Seat", 8942.00);
+        seatsList.insertAtEnd("Child Safety Seat", 3216.00);
+    }
+
+    public final void insertLights() {
+        lightList.insertAtEnd("Headlights", 2100.00);
+        lightList.insertAtEnd("Taillights", 3265.00);
+        lightList.insertAtEnd("Brake Lights", 5210.00);
+        lightList.insertAtEnd("Turn Signal Lights", 4125.00);
+        lightList.insertAtEnd("Reverse Lights", 3267.00);
+        lightList.insertAtEnd("Fog Lights", 2851.00);
+        lightList.insertAtEnd("Daytime Running Lights", 2358.00);
+        lightList.insertAtEnd("Interior Lights", 9851.00);
+        lightList.insertAtEnd("Parking Lights", 1258.00);
+        lightList.insertAtEnd("Hazard Lights", 3269.00);
     }
 
     public final void scaleImage() {
@@ -106,7 +179,7 @@ public class MainPage extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         tfNewItemPrice = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton3 = new javax.swing.JButton();
+        btnClearAll = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
 
@@ -354,6 +427,14 @@ public class MainPage extends javax.swing.JFrame {
         btnOngoingOrders.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnOngoingOrders.setForeground(new java.awt.Color(255, 255, 255));
         btnOngoingOrders.setText("Ongoing Orders");
+        btnOngoingOrders.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnOngoingOrdersMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnOngoingOrdersMouseExited(evt);
+            }
+        });
         btnOngoingOrders.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOngoingOrdersActionPerformed(evt);
@@ -364,6 +445,14 @@ public class MainPage extends javax.swing.JFrame {
         btnAdminOnly.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnAdminOnly.setForeground(new java.awt.Color(255, 255, 255));
         btnAdminOnly.setText("Admin Only");
+        btnAdminOnly.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAdminOnlyMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAdminOnlyMouseExited(evt);
+            }
+        });
         btnAdminOnly.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdminOnlyActionPerformed(evt);
@@ -383,19 +472,37 @@ public class MainPage extends javax.swing.JFrame {
         jLabel9.setText("New Item:");
 
         tfNewItem.setPreferredSize(new java.awt.Dimension(73, 37));
+        tfNewItem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfNewItemKeyTyped(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel10.setText("New Item Pirce:");
 
         tfNewItemPrice.setPreferredSize(new java.awt.Dimension(73, 37));
+        tfNewItemPrice.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfNewItemPriceKeyTyped(evt);
+            }
+        });
 
-        jButton3.setBackground(new java.awt.Color(255, 102, 51));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Clear All");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnClearAll.setBackground(new java.awt.Color(255, 102, 51));
+        btnClearAll.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnClearAll.setForeground(new java.awt.Color(255, 255, 255));
+        btnClearAll.setText("Clear All");
+        btnClearAll.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnClearAllMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnClearAllMouseExited(evt);
+            }
+        });
+        btnClearAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnClearAllActionPerformed(evt);
             }
         });
 
@@ -403,6 +510,14 @@ public class MainPage extends javax.swing.JFrame {
         btnClose.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnClose.setForeground(new java.awt.Color(255, 255, 255));
         btnClose.setText("Close");
+        btnClose.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCloseMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCloseMouseExited(evt);
+            }
+        });
         btnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCloseActionPerformed(evt);
@@ -413,6 +528,14 @@ public class MainPage extends javax.swing.JFrame {
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
         btnAdd.setText("+ Add");
+        btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAddMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAddMouseExited(evt);
+            }
+        });
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddActionPerformed(evt);
@@ -431,27 +554,25 @@ public class MainPage extends javax.swing.JFrame {
                     .addGroup(AddNewItemsPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(AddNewItemsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(AddNewItemsPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(0, 95, Short.MAX_VALUE))
                             .addComponent(tfNewItem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cbxProduct, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(tfNewItemPrice, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(AddNewItemsPanelLayout.createSequentialGroup()
                                 .addGroup(AddNewItemsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
                                     .addComponent(jLabel9)
                                     .addComponent(jLabel10))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(AddNewItemsPanelLayout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 31, Short.MAX_VALUE))
                     .addGroup(AddNewItemsPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(AddNewItemsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnClose, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(btnClearAll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         AddNewItemsPanelLayout.setVerticalGroup(
@@ -476,7 +597,7 @@ public class MainPage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnClearAll, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -556,40 +677,102 @@ public class MainPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
-        
+        String name = "Porsche 911 GT3 RS";
+        double price = 112326.00;
+        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        carOne.setVisible(true);
+        carOne.pack();
+        carOne.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
-        
+        String name = "Porsche 911 Turdo";
+        double price = 214326.00;
+        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        carOne.setVisible(true);
+        carOne.pack();
+        carOne.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jPanel3MouseClicked
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
-        
+        String name = "Porsche 911 Turdo";
+        double price = 214326.00;
+        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        carOne.setVisible(true);
+        carOne.pack();
+        carOne.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jPanel4MouseClicked
 
     private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
-        
+        String name = "Porsche 911 Carrera T";
+        double price = 111316.00;
+        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        carOne.setVisible(true);
+        carOne.pack();
+        carOne.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jPanel5MouseClicked
 
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
-        
+        String name = "Porsche 911 Turbo Cabriolet";
+        double price = 211316.00;
+        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        carOne.setVisible(true);
+        carOne.pack();
+        carOne.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jPanel6MouseClicked
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
-        
+        String name = "Porsche 911 Dakar";
+        double price = 163259.00;
+        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        carOne.setVisible(true);
+        carOne.pack();
+        carOne.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jPanel7MouseClicked
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
 
     }//GEN-LAST:event_jPanel1MouseClicked
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnClearAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearAllActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        cbxProduct.setSelectedIndex(0);
+        tfNewItem.setText("");
+        tfNewItemPrice.setText("");
+    }//GEN-LAST:event_btnClearAllActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        
+        int select = cbxProduct.getSelectedIndex();
+        if (select == 0) {
+            JOptionPane.showMessageDialog(this, "Sorry, the data could not be inserted into the database. Please try again.");
+        } else if (select == 1) {
+            String item = tfNewItem.getText(); // Use getText() instead of toString()
+            double price = Double.parseDouble(tfNewItemPrice.getText()); // Use getText() instead of toString()
+            bodyColorlist.insertAtEnd(item, price);
+        } else if (select == 2) {
+            String item = tfNewItem.getText(); // Use getText() instead of toString()
+            double price = Double.parseDouble(tfNewItemPrice.getText()); // Use getText() instead of toString()
+            rimAndTyersList.insertAtEnd(item, price);
+        } else if (select == 3) {
+            String item = tfNewItem.getText(); // Use getText() instead of toString()
+            double price = Double.parseDouble(tfNewItemPrice.getText()); // Use getText() instead of toString()
+            seatsList.insertAtEnd(item, price);
+        } else if (select == 4) {
+            String item = tfNewItem.getText(); // Use getText() instead of toString()
+            double price = Double.parseDouble(tfNewItemPrice.getText()); // Use getText() instead of toString()
+            lightList.insertAtEnd(item, price);
+        }
+        JOptionPane.showMessageDialog(this, "Data saved suuccsessfully.");
+        cbxProduct.setSelectedIndex(0);
+        tfNewItem.setText("");
+        tfNewItemPrice.setText("");
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnAdminOnlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminOnlyActionPerformed
@@ -610,6 +793,112 @@ public class MainPage extends javax.swing.JFrame {
         order.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnOngoingOrdersActionPerformed
+
+    private void btnAdminOnlyMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdminOnlyMouseEntered
+        // TODO add your handling code here:
+        btnOngoingOrders.setBackground(Color.white);
+
+        // Change text color
+        btnOngoingOrders.setForeground(Color.green);
+    }//GEN-LAST:event_btnAdminOnlyMouseEntered
+
+    private void btnAdminOnlyMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdminOnlyMouseExited
+        // TODO add your handling code here:
+        btnOngoingOrders.setBackground(Color.green);
+
+        // Change text color
+        btnOngoingOrders.setForeground(Color.white);
+    }//GEN-LAST:event_btnAdminOnlyMouseExited
+
+    private void btnOngoingOrdersMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOngoingOrdersMouseEntered
+        // TODO add your handling code here:
+        btnOngoingOrders.setBackground(Color.white);
+
+        // Change text color
+        btnOngoingOrders.setForeground(Color.green);
+    }//GEN-LAST:event_btnOngoingOrdersMouseEntered
+
+    private void btnOngoingOrdersMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOngoingOrdersMouseExited
+        // TODO add your handling code here:
+        btnOngoingOrders.setBackground(Color.green);
+
+        // Change text color
+        btnOngoingOrders.setForeground(Color.white);
+    }//GEN-LAST:event_btnOngoingOrdersMouseExited
+
+    private void btnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseEntered
+        // TODO add your handling code here:
+        btnAdd.setBackground(Color.white);
+
+        // Change text color
+        btnAdd.setForeground(Color.green);
+    }//GEN-LAST:event_btnAddMouseEntered
+
+    private void btnAddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseExited
+        // TODO add your handling code here:
+        btnAdd.setBackground(Color.green);
+
+        // Change text color
+        btnAdd.setForeground(Color.white);
+    }//GEN-LAST:event_btnAddMouseExited
+
+    private void btnClearAllMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClearAllMouseEntered
+        // TODO add your handling code here:
+        btnClearAll.setBackground(Color.white);
+
+        // Change text color
+        btnClearAll.setForeground(new Color(255, 102, 51));
+    }//GEN-LAST:event_btnClearAllMouseEntered
+
+    private void btnClearAllMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClearAllMouseExited
+        // TODO add your handling code here:
+        btnClearAll.setBackground(new Color(255, 102, 51));
+
+        // Change text color
+        btnClearAll.setForeground(Color.white);
+    }//GEN-LAST:event_btnClearAllMouseExited
+
+    private void btnCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseEntered
+        // TODO add your handling code here:
+        btnClose.setBackground(Color.white);
+
+        // Change text color
+        btnClose.setForeground(Color.red);
+    }//GEN-LAST:event_btnCloseMouseEntered
+
+    private void btnCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseExited
+        // TODO add your handling code here:
+        btnClose.setBackground(Color.red);
+
+        // Change text color
+        btnClose.setForeground(Color.white);
+    }//GEN-LAST:event_btnCloseMouseExited
+
+    private void tfNewItemKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNewItemKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!Character.isLetter(c) && !Character.isWhitespace(c)) {
+            evt.consume();
+            tfNewItem.setBorder(BorderFactory.createLineBorder(Color.red));
+            tfNewItemPrice.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        } else {
+            tfNewItem.setBorder(BorderFactory.createLineBorder(Color.red));
+
+        }
+    }//GEN-LAST:event_tfNewItemKeyTyped
+
+    private void tfNewItemPriceKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNewItemPriceKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && !Character.isWhitespace(c)) {
+            evt.consume();
+            tfNewItemPrice.setBorder(BorderFactory.createLineBorder(Color.red));
+            tfNewItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        } else {
+            tfNewItemPrice.setBorder(BorderFactory.createLineBorder(Color.red));
+
+        }
+    }//GEN-LAST:event_tfNewItemPriceKeyTyped
 
     /**
      * @param args the command line arguments
@@ -650,10 +939,10 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JPanel AddNewItemsPanel;
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnAdminOnly;
+    private javax.swing.JButton btnClearAll;
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnOngoingOrders;
     private javax.swing.JComboBox<String> cbxProduct;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
