@@ -4,19 +4,32 @@
  */
 package viewPage;
 
+import DoublyLinkedList.DoublyLinkedList;
 import DoublyLinkedList.Node;
 import com.sun.net.httpserver.Headers;
+import java.awt.Color;
 import java.awt.Image;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import singlyLinkedList.SinglyLinkedList;
+import singlyLinkedList.LinkedListNode;
+import nodeArray.ArrayNode;
 
 /**
  *
  * @author Sarith
  */
 public class OrderPage extends javax.swing.JFrame {
+    
+    DoublyLinkedList bodyColorlist = new DoublyLinkedList();
+    DoublyLinkedList rimAndTyersList = new DoublyLinkedList();
+    DoublyLinkedList seatsList = new DoublyLinkedList();
+    DoublyLinkedList lightList = new DoublyLinkedList();
+
+    SinglyLinkedList linkedList = new SinglyLinkedList();
 
     /**
      * Creates new form OrderPage
@@ -24,13 +37,59 @@ public class OrderPage extends javax.swing.JFrame {
     public OrderPage() {
         initComponents();
 
-        
+        txtADetails.setEditable(false);
+        txtADetails.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        tblCustomerDetails.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+//                    addToBill();
+                }
+            }
+        });
     }
 
-    
+    public OrderPage(SinglyLinkedList linkedList, DoublyLinkedList bodyColorlist, DoublyLinkedList rimAndTyersList, DoublyLinkedList seatsList, DoublyLinkedList lightList) {
+        initComponents();
+        
+        this.bodyColorlist = bodyColorlist;
+        this.rimAndTyersList = rimAndTyersList;
+        this.seatsList = seatsList;
+        this.lightList = lightList;
+        
+        txtADetails.setEditable(false);
+        txtADetails.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        
+        this.linkedList = linkedList;
+//        this.linkedList.display();
+    }
 
-    
-
+//    public void addToBill() {
+//        int selectedRow = tblCustomerDetails.getSelectedRow();
+//        if (selectedRow != -1) {
+//            // No row is selected, handle this case accordingly
+//            LinkedListNode temp = linkedList.head;
+//            for (int i = 0; i < selectedRow; i++) {
+//                temp = temp.link;
+//            }
+//            System.out.println(temp.data);
+//        }
+//        DefaultTableModel tableModel = (DefaultTableModel) tblItemDetails.getModel();
+//        tableModel.setRowCount(0);
+//        LinkedListNode node = linkedList.head;
+//        for (int i = 0; i <= selectedRow && node != null; i++) {
+//            int length = node.array.length;
+//            for (int x = 0; x < length; x++) {
+//                ArrayNode tempNode = node.array[x];
+//                String item = tempNode.item;
+//                double price = tempNode.price;
+//                tableModel.addRow(new Object[]{item, price});
+//            }
+//            node = node.link; // Move to the next node
+//        }
+//
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,7 +115,7 @@ public class OrderPage extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1080, 720));
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setAlignmentX(0.0F);
         jPanel1.setAlignmentY(0.0F);
         jPanel1.setMaximumSize(new java.awt.Dimension(1080, 720));
@@ -64,6 +123,7 @@ public class OrderPage extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(1080, 720));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Ongoing Orders");
         jLabel2.setAlignmentY(0.0F);
@@ -71,24 +131,33 @@ public class OrderPage extends javax.swing.JFrame {
         jLabel2.setMinimumSize(new java.awt.Dimension(1003, 50));
         jLabel2.setPreferredSize(new java.awt.Dimension(1003, 50));
 
+        tblCustomerDetails.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tblCustomerDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Customer Name", "NIC", "Email", "Address"
+                "Customer Name", "NIC", "Email", "Telephone", "Address"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tblCustomerDetails.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tblCustomerDetails.setRowHeight(40);
+        tblCustomerDetails.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCustomerDetailsMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblCustomerDetails);
 
+        tblItemDetails.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tblItemDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -112,9 +181,11 @@ public class OrderPage extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblItemDetails.setRowHeight(40);
         jScrollPane2.setViewportView(tblItemDetails);
 
         txtADetails.setColumns(20);
+        txtADetails.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtADetails.setRows(5);
         jScrollPane3.setViewportView(txtADetails);
 
@@ -122,6 +193,15 @@ public class OrderPage extends javax.swing.JFrame {
         btnRefresh.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         btnRefresh.setForeground(new java.awt.Color(255, 255, 255));
         btnRefresh.setText("Refresh");
+        btnRefresh.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRefreshMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRefreshMouseExited(evt);
+            }
+        });
         btnRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefreshActionPerformed(evt);
@@ -132,6 +212,15 @@ public class OrderPage extends javax.swing.JFrame {
         btnBack.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setText("Go Back");
+        btnBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnBackMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnBackMouseExited(evt);
+            }
+        });
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
@@ -198,13 +287,99 @@ public class OrderPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-       
+        MainPage page = new MainPage(linkedList,bodyColorlist, rimAndTyersList, seatsList, lightList);
+        page.setVisible(true);
+        page.pack();
+        page.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
-        
+        removeItems();
+        DefaultTableModel tableModel = (DefaultTableModel) tblCustomerDetails.getModel();
+        tableModel.setRowCount(0);
+        LinkedListNode currentNode = linkedList.head;
+
+        while (currentNode != null) {
+            tableModel.addRow(new Object[]{currentNode.fullName, currentNode.NIC, currentNode.email, currentNode.address});
+            currentNode = currentNode.link;
+        }
+//        tableModel.addRow(new Object[]{currentNode.fullName, currentNode.NIC, currentNode.email, currentNode.address});
     }//GEN-LAST:event_btnRefreshActionPerformed
+
+    public void removeItems() {
+        int numRows = tblItemDetails.getRowCount();
+        DefaultTableModel model1 = (DefaultTableModel) tblItemDetails.getModel();
+
+        // Remove rows from the table model
+        for (int i = numRows - 1; i >= 0; i--) {
+            model1.removeRow(i);
+        }
+
+        txtADetails.setText("");
+    }
+
+    private void tblCustomerDetailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCustomerDetailsMouseClicked
+        // TODO add your handling code here:
+        namePrint();
+    }//GEN-LAST:event_tblCustomerDetailsMouseClicked
+
+    private void btnRefreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRefreshMouseEntered
+        // TODO add your handling code here:
+        btnRefresh.setBackground(Color.white);
+
+        // Change text color
+        btnRefresh.setForeground(Color.blue);
+    }//GEN-LAST:event_btnRefreshMouseEntered
+
+    private void btnRefreshMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRefreshMouseExited
+        // TODO add your handling code here:
+        btnRefresh.setBackground(Color.blue);
+
+        // Change text color
+        btnRefresh.setForeground(Color.white);
+    }//GEN-LAST:event_btnRefreshMouseExited
+
+    private void btnBackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseEntered
+        // TODO add your handling code here:
+        btnBack.setBackground(Color.white);
+
+        // Change text color
+        btnBack.setForeground(Color.red);
+    }//GEN-LAST:event_btnBackMouseEntered
+
+    private void btnBackMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseExited
+        // TODO add your handling code here:
+        btnBack.setBackground(Color.red);
+
+        // Change text color
+        btnBack.setForeground(Color.white);
+    }//GEN-LAST:event_btnBackMouseExited
+
+    public void namePrint() {
+        int selectedRow = tblCustomerDetails.getSelectedRow();
+
+        String name = tblCustomerDetails.getValueAt(selectedRow, 0).toString();
+
+        LinkedListNode current = linkedList.head;
+        while (current.fullName != name) {
+            current = current.link;
+        }
+
+        txtADetails.setText(current.data);
+
+        for (int i = 0; i < current.array.length; i++) {
+            ArrayNode tempNode = current.array[i];
+            String item = tempNode.item;
+            double price = tempNode.price;
+
+            DefaultTableModel tableModel = (DefaultTableModel) tblItemDetails.getModel();
+            tableModel.addRow(new Object[]{item, price});
+
+        }
+
+    }
 
     /**
      * @param args the command line arguments

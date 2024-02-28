@@ -9,7 +9,7 @@ package graph;
  * @author Sarith
  */
 public class DijkstraAlgorithm {
-     // Number of cities
+ // Number of cities
     private static final int V = 15;
 
     // Method to find the vertex with the minimum distance value

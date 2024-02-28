@@ -6,11 +6,12 @@ package viewPage;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import graph.DijkstraAlgorithm;
 import DoublyLinkedList.DoublyLinkedList;
 import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
-
+import singlyLinkedList.SinglyLinkedList;
 
 /**
  *
@@ -25,6 +26,9 @@ public class MainPage extends javax.swing.JFrame {
     DoublyLinkedList rimAndTyersList = new DoublyLinkedList();
     DoublyLinkedList seatsList = new DoublyLinkedList();
     DoublyLinkedList lightList = new DoublyLinkedList();
+
+    SinglyLinkedList linkedList = new SinglyLinkedList();
+
     /**
      * Creates new form MainPage
      */
@@ -32,13 +36,15 @@ public class MainPage extends javax.swing.JFrame {
         initComponents();
         scaleImage();
         AddNewItemsPanel.setVisible(false);
-        
+
         insertBodyColor();
         insertRimandTyers();
         insertSeats();
         insertLights();
+
         color();
-       graph = new int[][]{
+
+        graph = new int[][]{
             {0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Sri Lanka
             {8, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // India
             {0, 7, 0, 9, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // China
@@ -60,12 +66,55 @@ public class MainPage extends javax.swing.JFrame {
         locations = new String[]{"Sri_Lanka", "India", "China", "Malasiya", "Thailand", "Japan", "South_Korea", "Russia", "USA", "Newzeland", "Canada", "England", "France", "Denmark", "Netherland"};
 
     }
-    
+
+    public MainPage(SinglyLinkedList linkedList,DoublyLinkedList bodyColorlist, DoublyLinkedList rimAndTyersList, DoublyLinkedList seatsList, DoublyLinkedList lightList) {
+        initComponents();
+        scaleImage();
+        AddNewItemsPanel.setVisible(false);
+
+        insertBodyColor();
+        insertRimandTyers();
+        insertSeats();
+        insertLights();
+
+        color();
+        
+        this.bodyColorlist = bodyColorlist;
+        this.rimAndTyersList = rimAndTyersList;
+        this.seatsList = seatsList;
+        this.lightList = lightList;
+        
+        this.linkedList = linkedList;
+//        linkedList.display();
+
+        graph = new int[][]{
+            {0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Sri Lanka
+            {8, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // India
+            {0, 7, 0, 9, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // China
+            {0, 0, 9, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Malasiya
+            {0, 0, 3, 4, 0, 12, 5, 0, 0, 0, 0, 0, 0, 0, 0}, // Thailand
+            {0, 0, 0, 0, 12, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0}, // Japan
+            {0, 0, 0, 0, 5, 3, 0, 5, 5, 0, 0, 0, 0, 0, 0}, // South Korea
+            {0, 0, 0, 0, 0, 3, 5, 0, 3, 0, 0, 0, 0, 0, 0}, // Russia
+            {0, 0, 0, 0, 0, 0, 5, 3, 0, 10, 5, 0, 0, 0, 0}, // USA
+            {0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 3, 3, 0, 0, 0}, // Newzeland
+            {0, 0, 0, 0, 0, 0, 0, 0, 5, 3, 0, 5, 3, 0, 0}, // Canada
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 5, 0, 12, 0, 0}, // England
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 12, 0, 5, 0}, // France
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 3}, // Denmark
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 0} // Netherland
+        };
+
+        // Array of location names
+        locations = new String[]{"Sri_Lanka", "India", "China", "Malasiya", "Thailand", "Japan", "South_Korea", "Russia", "USA", "Newzeland", "Canada", "England", "France", "Denmark", "Netherland"};
+
+    }
+
     public void color() {
         tfNewItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         tfNewItemPrice.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
-    
+
     public final void insertBodyColor() {
         bodyColorlist.insertAtEnd("Red", 25000.00);
         bodyColorlist.insertAtEnd("orange", 50000.00);
@@ -80,7 +129,7 @@ public class MainPage extends javax.swing.JFrame {
         bodyColorlist.insertAtEnd("Black", 41000.00);
 
     }
-    
+
     public final void insertRimandTyers() {
         rimAndTyersList.insertAtEnd("Golden Rim and Tyer", 2500.00);
         rimAndTyersList.insertAtEnd("Danlop Tyer", 500.00);
@@ -341,6 +390,9 @@ public class MainPage extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel7MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel7MouseEntered(evt);
+            }
         });
 
         labelSix.setAlignmentY(0.0F);
@@ -447,6 +499,7 @@ public class MainPage extends javax.swing.JFrame {
         btnOngoingOrders.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnOngoingOrders.setForeground(new java.awt.Color(255, 255, 255));
         btnOngoingOrders.setText("Ongoing Orders");
+        btnOngoingOrders.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnOngoingOrders.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnOngoingOrdersMouseEntered(evt);
@@ -465,7 +518,11 @@ public class MainPage extends javax.swing.JFrame {
         btnAdminOnly.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnAdminOnly.setForeground(new java.awt.Color(255, 255, 255));
         btnAdminOnly.setText("Admin Only");
+        btnAdminOnly.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAdminOnly.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAdminOnlyMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAdminOnlyMouseEntered(evt);
             }
@@ -487,6 +544,16 @@ public class MainPage extends javax.swing.JFrame {
 
         cbxProduct.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cbxProduct.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a Product", "Body Color", "Rim & Tyers", "Seats", "Lights", " " }));
+        cbxProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxProductActionPerformed(evt);
+            }
+        });
+        cbxProduct.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbxProductKeyPressed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel9.setText("New Item:");
@@ -512,6 +579,7 @@ public class MainPage extends javax.swing.JFrame {
         btnClearAll.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnClearAll.setForeground(new java.awt.Color(255, 255, 255));
         btnClearAll.setText("Clear All");
+        btnClearAll.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnClearAll.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnClearAllMouseEntered(evt);
@@ -530,7 +598,11 @@ public class MainPage extends javax.swing.JFrame {
         btnClose.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnClose.setForeground(new java.awt.Color(255, 255, 255));
         btnClose.setText("Close");
+        btnClose.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnClose.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCloseMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnCloseMouseEntered(evt);
             }
@@ -548,6 +620,7 @@ public class MainPage extends javax.swing.JFrame {
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
         btnAdd.setText("+ Add");
+        btnAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAddMouseEntered(evt);
@@ -696,10 +769,42 @@ public class MainPage extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void Path(String shortestPath, String destination) {
+        // Split the path into words
+        String[] words = shortestPath.split(" ");
+        System.out.print("Shortest path root from " + destination + " to Sri lanka : ");
+
+        // Print the words in reverse order
+        for (int i = words.length - 1; i >= 0; i--) {
+            System.out.print(words[i] + " ");
+        }
+        System.out.println("");
+    }
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
+        int distance = 0;
+        String shortestPath = "null";
+
+        // Destination location for which shortest path is to be found
+        String destination = "USA";
+        if (graph != null) {
+            // Create an instance of DijkstraAlgorithm
+            DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm();
+
+            // Find shortest path from branch to the destination city
+            distance = dijkstraAlgorithm.findShortestDistanceToLocation(graph, locations, destination);
+            shortestPath = dijkstraAlgorithm.findShortestPathToLocation(graph, locations, destination);
+
+        } else {
+            System.out.println("Graph is empty");
+        }
+
+        int importDay = distance;
+        System.out.println("Days for import: " + importDay);
+        Path(shortestPath, destination);
+
         String name = "Porsche 911 GT3 RS";
         double price = 112326.00;
-        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        CustomizationPage carOne = new CustomizationPage(name, price, importDay, destination, bodyColorlist, rimAndTyersList, seatsList, lightList, linkedList);
         carOne.setVisible(true);
         carOne.pack();
         carOne.setLocationRelativeTo(null);
@@ -707,9 +812,30 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
+        int distance = 0;
+        String shortestPath = "null";
+
+        // Destination location for which shortest path is to be found
+        String destination = "France";
+        if (graph != null) {
+            // Create an instance of DijkstraAlgorithm
+            DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm();
+
+            // Find shortest path from branch to the destination city
+            distance = dijkstraAlgorithm.findShortestDistanceToLocation(graph, locations, destination);
+            shortestPath = dijkstraAlgorithm.findShortestPathToLocation(graph, locations, destination);
+
+        } else {
+            System.out.println("Graph is empty");
+        }
+
+        int importDay = distance;
+        System.out.println("Days for import: " + importDay);
+        Path(shortestPath, destination);
+
         String name = "Porsche 911 Turdo";
         double price = 214326.00;
-        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        CustomizationPage carOne = new CustomizationPage(name, price, importDay, destination, bodyColorlist, rimAndTyersList, seatsList, lightList, linkedList);
         carOne.setVisible(true);
         carOne.pack();
         carOne.setLocationRelativeTo(null);
@@ -717,9 +843,30 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel3MouseClicked
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
-        String name = "Porsche 911 Turdo";
-        double price = 214326.00;
-        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        int distance = 0;
+        String shortestPath = "null";
+
+        // Destination location for which shortest path is to be found
+        String destination = "Netherland";
+        if (graph != null) {
+            // Create an instance of DijkstraAlgorithm
+            DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm();
+
+            // Find shortest path from branch to the destination city
+            distance = dijkstraAlgorithm.findShortestDistanceToLocation(graph, locations, destination);
+            shortestPath = dijkstraAlgorithm.findShortestPathToLocation(graph, locations, destination);
+
+        } else {
+            System.out.println("Graph is empty");
+        }
+
+        int importDay = distance;
+        System.out.println("Days for import: " + importDay);
+        Path(shortestPath, destination);
+
+        String name = "Porsche 911 Carrera T";
+        double price = 111316.00;
+        CustomizationPage carOne = new CustomizationPage(name, price, importDay, destination, bodyColorlist, rimAndTyersList, seatsList, lightList, linkedList);
         carOne.setVisible(true);
         carOne.pack();
         carOne.setLocationRelativeTo(null);
@@ -727,9 +874,30 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel4MouseClicked
 
     private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
-        String name = "Porsche 911 Carrera T";
-        double price = 111316.00;
-        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        int distance = 0;
+        String shortestPath = "null";
+
+        // Destination location for which shortest path is to be found
+        String destination = "Newzeland";
+        if (graph != null) {
+            // Create an instance of DijkstraAlgorithm
+            DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm();
+
+            // Find shortest path from branch to the destination city
+            distance = dijkstraAlgorithm.findShortestDistanceToLocation(graph, locations, destination);
+            shortestPath = dijkstraAlgorithm.findShortestPathToLocation(graph, locations, destination);
+
+        } else {
+            System.out.println("Graph is empty");
+        }
+
+        int importDay = distance;
+        System.out.println("Days for import: " + importDay);
+        Path(shortestPath, destination);
+
+        String name = "Porsche 911 Turbo Cabriolet";
+        double price = 211316.00;
+        CustomizationPage carOne = new CustomizationPage(name, price, importDay, destination, bodyColorlist, rimAndTyersList, seatsList, lightList, linkedList);
         carOne.setVisible(true);
         carOne.pack();
         carOne.setLocationRelativeTo(null);
@@ -737,9 +905,30 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel5MouseClicked
 
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
-        String name = "Porsche 911 Turbo Cabriolet";
-        double price = 211316.00;
-        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        int distance = 0;
+        String shortestPath = "null";
+
+        // Destination location for which shortest path is to be found
+        String destination = "England";
+        if (graph != null) {
+            // Create an instance of DijkstraAlgorithm
+            DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm();
+
+            // Find shortest path from branch to the destination city
+            distance = dijkstraAlgorithm.findShortestDistanceToLocation(graph, locations, destination);
+            shortestPath = dijkstraAlgorithm.findShortestPathToLocation(graph, locations, destination);
+
+        } else {
+            System.out.println("Graph is empty");
+        }
+
+        int importDay = distance;
+        System.out.println("Days for import: " + importDay);
+        Path(shortestPath, destination);
+
+        String name = "Porsche 911 Dakar";
+        double price = 163259.00;
+        CustomizationPage carOne = new CustomizationPage(name, price, importDay, destination, bodyColorlist, rimAndTyersList, seatsList, lightList, linkedList);
         carOne.setVisible(true);
         carOne.pack();
         carOne.setLocationRelativeTo(null);
@@ -747,9 +936,30 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel6MouseClicked
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
-        String name = "Porsche 911 Dakar";
-        double price = 163259.00;
-        CustomizationPage carOne = new CustomizationPage(name, price, bodyColorlist, rimAndTyersList, seatsList, lightList);
+        int distance = 0;
+        String shortestPath = "null";
+
+        // Destination location for which shortest path is to be found
+        String destination = "Japan";
+        if (graph != null) {
+            // Create an instance of DijkstraAlgorithm
+            DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm();
+
+            // Find shortest path from branch to the destination city
+            distance = dijkstraAlgorithm.findShortestDistanceToLocation(graph, locations, destination);
+            shortestPath = dijkstraAlgorithm.findShortestPathToLocation(graph, locations, destination);
+
+        } else {
+            System.out.println("Graph is empty");
+        }
+
+        int importDay = distance;
+        System.out.println("Days for import: " + importDay);
+        Path(shortestPath, destination);
+
+        String name = "Porsche 911 Carrera GT4";
+        double price = 283151.00;
+        CustomizationPage carOne = new CustomizationPage(name, price, importDay, destination, bodyColorlist, rimAndTyersList, seatsList, lightList, linkedList);
         carOne.setVisible(true);
         carOne.pack();
         carOne.setLocationRelativeTo(null);
@@ -769,30 +979,35 @@ public class MainPage extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        int select = cbxProduct.getSelectedIndex();
-        if (select == 0) {
-            JOptionPane.showMessageDialog(this, "Sorry, the data could not be inserted into the database. Please try again.");
-        } else if (select == 1) {
-            String item = tfNewItem.getText(); // Use getText() instead of toString()
-            double price = Double.parseDouble(tfNewItemPrice.getText()); // Use getText() instead of toString()
-            bodyColorlist.insertAtEnd(item, price);
-        } else if (select == 2) {
-            String item = tfNewItem.getText(); // Use getText() instead of toString()
-            double price = Double.parseDouble(tfNewItemPrice.getText()); // Use getText() instead of toString()
-            rimAndTyersList.insertAtEnd(item, price);
-        } else if (select == 3) {
-            String item = tfNewItem.getText(); // Use getText() instead of toString()
-            double price = Double.parseDouble(tfNewItemPrice.getText()); // Use getText() instead of toString()
-            seatsList.insertAtEnd(item, price);
-        } else if (select == 4) {
-            String item = tfNewItem.getText(); // Use getText() instead of toString()
-            double price = Double.parseDouble(tfNewItemPrice.getText()); // Use getText() instead of toString()
-            lightList.insertAtEnd(item, price);
+        if (cbxProduct.getSelectedIndex() == 0 || tfNewItem.getText().isEmpty() || tfNewItemPrice.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please, cheak again to conform all feilds should not be empty.");
+        } else {
+            int select = cbxProduct.getSelectedIndex();
+            if (select == 0) {
+                JOptionPane.showMessageDialog(this, "Sorry, the data could not be inserted into the database. Please try again.");
+            } else if (select == 1) {
+                String item = tfNewItem.getText(); // Use getText() instead of toString()
+                double price = Double.parseDouble(tfNewItemPrice.getText()); // Use getText() instead of toString()
+                bodyColorlist.insertAtEnd(item, price);
+            } else if (select == 2) {
+                String item = tfNewItem.getText(); // Use getText() instead of toString()
+                double price = Double.parseDouble(tfNewItemPrice.getText()); // Use getText() instead of toString()
+                rimAndTyersList.insertAtEnd(item, price);
+            } else if (select == 3) {
+                String item = tfNewItem.getText(); // Use getText() instead of toString()
+                double price = Double.parseDouble(tfNewItemPrice.getText()); // Use getText() instead of toString()
+                seatsList.insertAtEnd(item, price);
+            } else if (select == 4) {
+                String item = tfNewItem.getText(); // Use getText() instead of toString()
+                double price = Double.parseDouble(tfNewItemPrice.getText()); // Use getText() instead of toString()
+                lightList.insertAtEnd(item, price);
+            }
+            JOptionPane.showMessageDialog(this, "Data saved suuccsessfully.");
+            cbxProduct.setSelectedIndex(0);
+            tfNewItem.setText("");
+            tfNewItemPrice.setText("");
         }
-        JOptionPane.showMessageDialog(this, "Data saved suuccsessfully.");
-        cbxProduct.setSelectedIndex(0);
-        tfNewItem.setText("");
-        tfNewItemPrice.setText("");
+
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnAdminOnlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminOnlyActionPerformed
@@ -807,28 +1022,12 @@ public class MainPage extends javax.swing.JFrame {
 
     private void btnOngoingOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOngoingOrdersActionPerformed
         // TODO add your handling code here:
-        OrderPage order = new OrderPage();
+        OrderPage order = new OrderPage(linkedList,bodyColorlist, rimAndTyersList, seatsList, lightList);
         order.setVisible(true);
         order.pack();
         order.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnOngoingOrdersActionPerformed
-
-    private void btnAdminOnlyMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdminOnlyMouseEntered
-        // TODO add your handling code here:
-        btnOngoingOrders.setBackground(Color.white);
-
-        // Change text color
-        btnOngoingOrders.setForeground(Color.green);
-    }//GEN-LAST:event_btnAdminOnlyMouseEntered
-
-    private void btnAdminOnlyMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdminOnlyMouseExited
-        // TODO add your handling code here:
-        btnOngoingOrders.setBackground(Color.green);
-
-        // Change text color
-        btnOngoingOrders.setForeground(Color.white);
-    }//GEN-LAST:event_btnAdminOnlyMouseExited
 
     private void btnOngoingOrdersMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOngoingOrdersMouseEntered
         // TODO add your handling code here:
@@ -846,37 +1045,26 @@ public class MainPage extends javax.swing.JFrame {
         btnOngoingOrders.setForeground(Color.white);
     }//GEN-LAST:event_btnOngoingOrdersMouseExited
 
-    private void btnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseEntered
+    private void btnAdminOnlyMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdminOnlyMouseEntered
         // TODO add your handling code here:
-        btnAdd.setBackground(Color.white);
+        btnAdminOnly.setBackground(Color.white);
 
         // Change text color
-        btnAdd.setForeground(Color.green);
-    }//GEN-LAST:event_btnAddMouseEntered
+        btnAdminOnly.setForeground(Color.red);
+    }//GEN-LAST:event_btnAdminOnlyMouseEntered
 
-    private void btnAddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseExited
+    private void btnAdminOnlyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdminOnlyMouseClicked
         // TODO add your handling code here:
-        btnAdd.setBackground(Color.green);
+        btnAdminOnly.setBackground(Color.white);
 
         // Change text color
-        btnAdd.setForeground(Color.white);
-    }//GEN-LAST:event_btnAddMouseExited
+        btnAdminOnly.setForeground(Color.red);
+    }//GEN-LAST:event_btnAdminOnlyMouseClicked
 
-    private void btnClearAllMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClearAllMouseEntered
+    private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
         // TODO add your handling code here:
-        btnClearAll.setBackground(Color.white);
 
-        // Change text color
-        btnClearAll.setForeground(new Color(255, 102, 51));
-    }//GEN-LAST:event_btnClearAllMouseEntered
-
-    private void btnClearAllMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClearAllMouseExited
-        // TODO add your handling code here:
-        btnClearAll.setBackground(new Color(255, 102, 51));
-
-        // Change text color
-        btnClearAll.setForeground(Color.white);
-    }//GEN-LAST:event_btnClearAllMouseExited
+    }//GEN-LAST:event_btnCloseMouseClicked
 
     private void btnCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseEntered
         // TODO add your handling code here:
@@ -894,31 +1082,84 @@ public class MainPage extends javax.swing.JFrame {
         btnClose.setForeground(Color.white);
     }//GEN-LAST:event_btnCloseMouseExited
 
+    private void btnClearAllMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClearAllMouseEntered
+        // TODO add your handling code here:
+        btnClearAll.setBackground(Color.white);
+
+        // Change text color
+        btnClearAll.setForeground(new Color(255, 102, 51));
+    }//GEN-LAST:event_btnClearAllMouseEntered
+
+    private void btnClearAllMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClearAllMouseExited
+        // TODO add your handling code here:
+        btnClearAll.setBackground(new Color(255, 102, 51));
+
+        // Change text color
+        btnClearAll.setForeground(Color.white);
+    }//GEN-LAST:event_btnClearAllMouseExited
+
+    private void btnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseEntered
+        // TODO add your handling code here:
+        btnAdd.setBackground(Color.white);
+
+        // Change text color
+        btnAdd.setForeground(Color.green);
+    }//GEN-LAST:event_btnAddMouseEntered
+
+    private void btnAddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseExited
+        // TODO add your handling code here:
+        btnAdd.setBackground(Color.green);
+
+        // Change text color
+        btnAdd.setForeground(Color.white);
+    }//GEN-LAST:event_btnAddMouseExited
+
+    private void btnAdminOnlyMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdminOnlyMouseExited
+        // TODO add your handling code here:
+        btnAdminOnly.setBackground(Color.red);
+
+        // Change text color
+        btnAdminOnly.setForeground(Color.white);
+    }//GEN-LAST:event_btnAdminOnlyMouseExited
+
+    private void jPanel7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel7MouseEntered
+
+    private void cbxProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProductActionPerformed
+
+    }//GEN-LAST:event_cbxProductActionPerformed
+
     private void tfNewItemKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNewItemKeyTyped
         // TODO add your handling code here:
-        char c = evt.getKeyChar();
-        if (!Character.isLetter(c) && !Character.isWhitespace(c)) {
-            evt.consume();
-            tfNewItem.setBorder(BorderFactory.createLineBorder(Color.red));
-            tfNewItemPrice.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        } else {
-            tfNewItem.setBorder(BorderFactory.createLineBorder(Color.red));
-
-        }
+//        char c = evt.getKeyChar();
+//        if (!Character.isLetter(c) && !Character.isWhitespace(c)) {
+//            evt.consume();
+//            tfNewItem.setBorder(BorderFactory.createLineBorder(Color.red));
+//            tfNewItemPrice.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//        } else {
+//            tfNewItem.setBorder(BorderFactory.createLineBorder(Color.red));
+//
+//        }
     }//GEN-LAST:event_tfNewItemKeyTyped
 
     private void tfNewItemPriceKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNewItemPriceKeyTyped
         // TODO add your handling code here:
-        char c = evt.getKeyChar();
-        if (!Character.isDigit(c) && !Character.isWhitespace(c)) {
-            evt.consume();
-            tfNewItemPrice.setBorder(BorderFactory.createLineBorder(Color.red));
-            tfNewItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        } else {
-            tfNewItemPrice.setBorder(BorderFactory.createLineBorder(Color.red));
-
-        }
+//        char c = evt.getKeyChar();
+//        if (!Character.isDigit(c) && !Character.isWhitespace(c)) {
+//            evt.consume();
+//            tfNewItemPrice.setBorder(BorderFactory.createLineBorder(Color.red));
+//            tfNewItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//        } else {
+//            tfNewItemPrice.setBorder(BorderFactory.createLineBorder(Color.red));
+//
+//        }
     }//GEN-LAST:event_tfNewItemPriceKeyTyped
+
+    private void cbxProductKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxProductKeyPressed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_cbxProductKeyPressed
 
     /**
      * @param args the command line arguments

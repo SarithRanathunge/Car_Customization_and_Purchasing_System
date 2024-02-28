@@ -42,4 +42,5 @@ public class SinglyLinkedList {
     public boolean isEmpty(){
         return (head == null);
     }
+
 }

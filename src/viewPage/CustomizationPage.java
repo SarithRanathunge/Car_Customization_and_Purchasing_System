@@ -10,7 +10,7 @@ import java.util.Date;
 import javax.swing.Timer;
 import DoublyLinkedList.DoublyLinkedList;
 import DoublyLinkedList.Node;
-import java.awt.Color;
+//import com.sun.jdi.connect.Transport;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -18,6 +18,23 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import graph.DijkstraAlgorithm;
+import java.awt.Color;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.mail.Message;
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
+import nodeArray.ArrayNode;
+import singlyLinkedList.LinkedListNode;
+import singlyLinkedList.SinglyLinkedList;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.PasswordAuthentication;
+import javax.mail.internet.MimeMessage;
+import javax.mail.Transport;
 
 /**
  *
@@ -34,11 +51,15 @@ public class CustomizationPage extends javax.swing.JFrame {
     String[] locations;
     int importDay;
     String Source;
+    String carName;
+    double carPrice = 0.0;
 
     DoublyLinkedList bodyColorlist = new DoublyLinkedList();
     DoublyLinkedList rimAndTyersList = new DoublyLinkedList();
     DoublyLinkedList seatsList = new DoublyLinkedList();
     DoublyLinkedList lightList = new DoublyLinkedList();
+
+    SinglyLinkedList linkedList = new SinglyLinkedList();
 
     /**
      * Creates new form Car
@@ -54,7 +75,18 @@ public class CustomizationPage extends javax.swing.JFrame {
         this.rimAndTyers = false;
         this.seats = false;
         this.lights = false;
-        
+
+        updateTotalPrice();
+        updateAdvacePrice();
+        updatePrice();
+
+        color();
+        txtArea.setEditable(false);
+
+//        insertBodyColor();
+//        insertRimandTyers();
+//        insertSeats();
+//        insertLights();
         graph = new int[][]{
             {0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Vito Pizza
             {8, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Gallface
@@ -76,12 +108,6 @@ public class CustomizationPage extends javax.swing.JFrame {
         // Array of location names
         locations = new String[]{"Porsche Branch", "Gallface", "Townhall", "Kollupitiya", "Bambalapitya", "Dematagoda", "Wellawatte", "Havelock Road", "Maharagama", "Nugegoda", "Piliyandala", "Nawala", "Narahenpita", "Borella", "Galle"};
 
-//        insertBodyColor();
-//        insertRimandTyers();
-//        insertSeats();
-//        insertLights();
-        locations = new String[]{"Porsche Branch", "Gallface", "Townhall", "Kollupitiya", "Bambalapitya", "Dematagoda", "Wellawatte", "Havelock Road", "Maharagama", "Nugegoda", "Piliyandala", "Nawala", "Narahenpita", "Borella", "Galle"};
-
         tblSelectItem.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -92,7 +118,7 @@ public class CustomizationPage extends javax.swing.JFrame {
         });
     }
 
-    public CustomizationPage(String name, double price, DoublyLinkedList bodyColorlist, DoublyLinkedList rimAndTyersList, DoublyLinkedList seatsList, DoublyLinkedList lightList) {
+    public CustomizationPage(String name, double price, int importDay, String source, DoublyLinkedList bodyColorlist, DoublyLinkedList rimAndTyersList, DoublyLinkedList seatsList, DoublyLinkedList lightList, SinglyLinkedList linkedList) {
         initComponents();
         setVehical(name, price);
         setDate();
@@ -100,6 +126,10 @@ public class CustomizationPage extends javax.swing.JFrame {
         setIcon();
         reSizeTableColumn();
         this.importDay = importDay;
+        this.Source = source;
+        txtArea.setText("Days to Import the car from " + source + " to Sri lanka " + importDay + " days.");
+
+        this.linkedList = linkedList;
 
         this.bodyColorlist = bodyColorlist;
         this.rimAndTyersList = rimAndTyersList;
@@ -111,10 +141,36 @@ public class CustomizationPage extends javax.swing.JFrame {
         this.seats = false;
         this.lights = false;
 
+        updateTotalPrice();
+        updateAdvacePrice();
+        updatePrice();
+
+        color();
+        txtArea.setEditable(false);
+
 //        insertBodyColor();
 //        insertRimandTyers();
 //        insertSeats();
 //        insertLights();
+        graph = new int[][]{
+            {0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Porsche branch
+            {8, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Gallface
+            {0, 7, 0, 9, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Townhall
+            {0, 0, 9, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, // Kollupitiya
+            {0, 0, 3, 4, 0, 12, 5, 0, 0, 0, 0, 0, 0, 0, 0}, // Bambalapitya
+            {0, 0, 0, 0, 12, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0}, // Dematagoda
+            {0, 0, 0, 0, 5, 3, 0, 5, 5, 0, 0, 0, 0, 0, 0}, // Wellawatte
+            {0, 0, 0, 0, 0, 3, 5, 0, 3, 0, 0, 0, 0, 0, 0}, // Havelock Road
+            {0, 0, 0, 0, 0, 0, 5, 3, 0, 10, 5, 0, 0, 0, 0}, // Maharagama
+            {0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 3, 3, 0, 0, 0}, // Nugegoda
+            {0, 0, 0, 0, 0, 0, 0, 0, 5, 3, 0, 5, 3, 0, 0}, // Piliyandala
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 5, 0, 12, 0, 0}, // Nawala
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 12, 0, 5, 0}, // Narahenpita
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 3}, // Borella
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 0} // Galle
+        };
+
+        // Array of location names
         locations = new String[]{"Porsche Branch", "Gallface", "Townhall", "Kollupitiya", "Bambalapitya", "Dematagoda", "Wellawatte", "Havelock Road", "Maharagama", "Nugegoda", "Piliyandala", "Nawala", "Narahenpita", "Borella", "Galle"};
 
         tblSelectItem.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -125,43 +181,18 @@ public class CustomizationPage extends javax.swing.JFrame {
                 }
             }
         });
+
     }
 
-    public void bye() {
-        TableColumnModel columnModel = tblSelectItem.getColumnModel();
-        columnModel.getColumn(0).setPreferredWidth(150);
-        columnModel.getColumn(1).setPreferredWidth(50);
-
-        TableColumnModel columnModel1 = tblBill.getColumnModel();
-        columnModel1.getColumn(0).setPreferredWidth(150);
-        columnModel1.getColumn(1).setPreferredWidth(100);
-    }
-
-    public final void hello(String name, double price) {
-        DefaultTableModel tableModel = (DefaultTableModel) tblBill.getModel();
-        tableModel.addRow(new Object[]{name, price});
-    }
-
-    public final void goodnight() {
-        Date d = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String dd = sdf.format(d);
-        lblDate.setText(dd);
-    }
-
-    public final void setVehical(String name, double price) {
-        DefaultTableModel tableModel = (DefaultTableModel) tblBill.getModel();
-        tableModel.addRow(new Object[]{name, price});
-    }
-
-    public CustomizationPage(String name, double price) {
-        initComponents();
-        setVehical(name, price);
-        setDate();
-        times();
-        setIcon();
-        reSizeTableColumn();
-
+    public void color() {
+        tffName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        tflName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        tfnic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        tftelephone.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        tfemail.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        tfCity.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        tfAddress.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        txtArea.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 
     public void reSizeTableColumn() {
@@ -172,6 +203,11 @@ public class CustomizationPage extends javax.swing.JFrame {
         TableColumnModel columnModel1 = tblBill.getColumnModel();
         columnModel1.getColumn(0).setPreferredWidth(150);
         columnModel1.getColumn(1).setPreferredWidth(100);
+    }
+
+    public final void setVehical(String name, double price) {
+        DefaultTableModel tableModel = (DefaultTableModel) tblBill.getModel();
+        tableModel.addRow(new Object[]{name, price});
     }
 
     public final void setDate() {
@@ -194,6 +230,62 @@ public class CustomizationPage extends javax.swing.JFrame {
         });
 
         t.start();
+    }
+
+    public void addBodycolorToTable() {
+
+        DefaultTableModel tableModel = (DefaultTableModel) tblSelectItem.getModel();
+        tableModel.setRowCount(0);
+        Node currentNode = bodyColorlist.head;
+        Node tail = bodyColorlist.tail;
+
+        while (currentNode != tail) {
+            tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
+            currentNode = currentNode.next;
+        }
+        tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
+    }
+
+    public void addRimAndTyerToTable() {
+
+        DefaultTableModel tableModel = (DefaultTableModel) tblSelectItem.getModel();
+        tableModel.setRowCount(0);
+        Node currentNode = rimAndTyersList.head;
+        Node tail = rimAndTyersList.tail;
+
+        while (currentNode != tail) {
+            tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
+            currentNode = currentNode.next;
+        }
+        tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
+    }
+
+    public void addSeatsToTable() {
+
+        DefaultTableModel tableModel = (DefaultTableModel) tblSelectItem.getModel();
+        tableModel.setRowCount(0);
+        Node currentNode = seatsList.head;
+        Node tail = seatsList.tail;
+
+        while (currentNode != tail) {
+            tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
+            currentNode = currentNode.next;
+        }
+        tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
+    }
+
+    public void addLightsToTable() {
+
+        DefaultTableModel tableModel = (DefaultTableModel) tblSelectItem.getModel();
+        tableModel.setRowCount(0);
+        Node currentNode = lightList.head;
+        Node tail = lightList.tail;
+
+        while (currentNode != tail) {
+            tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
+            currentNode = currentNode.next;
+        }
+        tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
     }
 
     public void addToBill() {
@@ -391,6 +483,11 @@ public class CustomizationPage extends javax.swing.JFrame {
                 tflNameActionPerformed(evt);
             }
         });
+        tflName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tflNameKeyTyped(evt);
+            }
+        });
 
         tfnic.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tfnic.setMaximumSize(new java.awt.Dimension(236, 30));
@@ -399,6 +496,11 @@ public class CustomizationPage extends javax.swing.JFrame {
         tfnic.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfnicActionPerformed(evt);
+            }
+        });
+        tfnic.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfnicKeyTyped(evt);
             }
         });
 
@@ -412,6 +514,11 @@ public class CustomizationPage extends javax.swing.JFrame {
         tfemail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfemailActionPerformed(evt);
+            }
+        });
+        tfemail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfemailKeyTyped(evt);
             }
         });
 
@@ -442,6 +549,11 @@ public class CustomizationPage extends javax.swing.JFrame {
                 tfCityPropertyChange(evt);
             }
         });
+        tfCity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfCityKeyTyped(evt);
+            }
+        });
 
         tfAddress.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tfAddress.setMaximumSize(new java.awt.Dimension(236, 30));
@@ -457,6 +569,11 @@ public class CustomizationPage extends javax.swing.JFrame {
                 tfAddressActionPerformed(evt);
             }
         });
+        tfAddress.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfAddressKeyTyped(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel7.setText("Address : ");
@@ -470,6 +587,11 @@ public class CustomizationPage extends javax.swing.JFrame {
                 tffNameActionPerformed(evt);
             }
         });
+        tffName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tffNameKeyTyped(evt);
+            }
+        });
 
         tftelephone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tftelephone.setMaximumSize(new java.awt.Dimension(236, 30));
@@ -478,6 +600,11 @@ public class CustomizationPage extends javax.swing.JFrame {
         tftelephone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tftelephoneActionPerformed(evt);
+            }
+        });
+        tftelephone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tftelephoneKeyTyped(evt);
             }
         });
 
@@ -631,6 +758,14 @@ public class CustomizationPage extends javax.swing.JFrame {
         btnRemove.setForeground(new java.awt.Color(255, 255, 255));
         btnRemove.setText("Remove");
         btnRemove.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRemove.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRemoveMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRemoveMouseExited(evt);
+            }
+        });
         btnRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRemoveActionPerformed(evt);
@@ -645,6 +780,14 @@ public class CustomizationPage extends javax.swing.JFrame {
         btnClearAll.setForeground(new java.awt.Color(255, 255, 255));
         btnClearAll.setText("Clear All");
         btnClearAll.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnClearAll.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnClearAllMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnClearAllMouseExited(evt);
+            }
+        });
         btnClearAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClearAllActionPerformed(evt);
@@ -656,6 +799,17 @@ public class CustomizationPage extends javax.swing.JFrame {
         btnOrderNow1.setForeground(new java.awt.Color(255, 255, 255));
         btnOrderNow1.setText("Order Now");
         btnOrderNow1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnOrderNow1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnOrderNow1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnOrderNow1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnOrderNow1MouseExited(evt);
+            }
+        });
         btnOrderNow1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOrderNow1ActionPerformed(evt);
@@ -899,42 +1053,74 @@ public class CustomizationPage extends javax.swing.JFrame {
         jButton6.setBackground(new java.awt.Color(51, 51, 51));
         jButton6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Body Color");
+        jButton6.setText("Roof");
         jButton6.setAlignmentY(0.0F);
         jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton6.setMaximumSize(new java.awt.Dimension(120, 40));
         jButton6.setMinimumSize(new java.awt.Dimension(120, 40));
         jButton6.setPreferredSize(new java.awt.Dimension(120, 40));
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton6MouseExited(evt);
+            }
+        });
 
         jButton7.setBackground(new java.awt.Color(51, 51, 51));
         jButton7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Rim & Tyers");
+        jButton7.setText("Seat Color");
         jButton7.setAlignmentY(0.0F);
         jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton7.setMaximumSize(new java.awt.Dimension(120, 40));
         jButton7.setMinimumSize(new java.awt.Dimension(120, 40));
         jButton7.setPreferredSize(new java.awt.Dimension(120, 40));
+        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton7MouseExited(evt);
+            }
+        });
 
         jButton8.setBackground(new java.awt.Color(51, 51, 51));
         jButton8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Seats");
+        jButton8.setText("NOS");
         jButton8.setAlignmentY(0.0F);
         jButton8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton8.setMaximumSize(new java.awt.Dimension(120, 40));
         jButton8.setMinimumSize(new java.awt.Dimension(120, 40));
         jButton8.setPreferredSize(new java.awt.Dimension(120, 40));
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton8MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton8MouseExited(evt);
+            }
+        });
 
         jButton9.setBackground(new java.awt.Color(51, 51, 51));
         jButton9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("Lights");
+        jButton9.setText("Gear Box");
         jButton9.setAlignmentY(0.0F);
         jButton9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton9.setMaximumSize(new java.awt.Dimension(120, 40));
         jButton9.setMinimumSize(new java.awt.Dimension(120, 40));
         jButton9.setPreferredSize(new java.awt.Dimension(120, 40));
+        jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton9MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton9MouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -1081,7 +1267,6 @@ public class CustomizationPage extends javax.swing.JFrame {
             lightList.mergeSortMaxToMin();
             addLightsToTable();
         }
-
     }//GEN-LAST:event_rbtnMaxPriceMouseClicked
 
     private void rbtnMinPriceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnMinPriceMouseClicked
@@ -1135,20 +1320,6 @@ public class CustomizationPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_rbtnZtoAMouseClicked
 
-    public void addBodycolorToTable() {
-
-        DefaultTableModel tableModel = (DefaultTableModel) tblSelectItem.getModel();
-        tableModel.setRowCount(0);
-        Node currentNode = bodyColorlist.head;
-        Node tail = bodyColorlist.tail;
-
-        while (currentNode != tail) {
-            tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
-            currentNode = currentNode.next;
-        }
-        tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
-    }
-
     private void btnBodyColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBodyColorActionPerformed
         addBodycolorToTable();
         bodyColor = true;
@@ -1160,47 +1331,7 @@ public class CustomizationPage extends javax.swing.JFrame {
     private void tftelephoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tftelephoneActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tftelephoneActionPerformed
-    public void addRimAndTyerToTable() {
 
-        DefaultTableModel tableModel = (DefaultTableModel) tblSelectItem.getModel();
-        tableModel.setRowCount(0);
-        Node currentNode = rimAndTyersList.head;
-        Node tail = rimAndTyersList.tail;
-
-        while (currentNode != tail) {
-            tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
-            currentNode = currentNode.next;
-        }
-        tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
-    }
-
-    public void addSeatsToTable() {
-
-        DefaultTableModel tableModel = (DefaultTableModel) tblSelectItem.getModel();
-        tableModel.setRowCount(0);
-        Node currentNode = seatsList.head;
-        Node tail = seatsList.tail;
-
-        while (currentNode != tail) {
-            tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
-            currentNode = currentNode.next;
-        }
-        tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
-    }
-
-    public void addLightsToTable() {
-
-        DefaultTableModel tableModel = (DefaultTableModel) tblSelectItem.getModel();
-        tableModel.setRowCount(0);
-        Node currentNode = lightList.head;
-        Node tail = lightList.tail;
-
-        while (currentNode != tail) {
-            tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
-            currentNode = currentNode.next;
-        }
-        tableModel.addRow(new Object[]{currentNode.item, currentNode.price});
-    }
     private void btnRimAndTyersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRimAndTyersActionPerformed
         // TODO add your handling code here:
         addRimAndTyerToTable();
@@ -1236,7 +1367,7 @@ public class CustomizationPage extends javax.swing.JFrame {
         lblBack.setIcon(scaledIcon);
     }
     private void lblBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseClicked
-        MainPage page = new MainPage();
+        MainPage page = new MainPage(linkedList, bodyColorlist, rimAndTyersList, seatsList, lightList);
         page.setVisible(true);
         page.pack();
         page.setLocationRelativeTo(null);
@@ -1245,17 +1376,218 @@ public class CustomizationPage extends javax.swing.JFrame {
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
 
+        DefaultTableModel model = (DefaultTableModel) tblBill.getModel();
+
+        if (tblBill.getSelectedRowCount() == 1) {
+            if (tblBill.getSelectedRow() != 0) {
+                model.removeRow(tblBill.getSelectedRow());
+            } else {
+                JOptionPane.showMessageDialog(this, "Couldn't remove vehicle form the bill table.");
+            }
+        } else {
+            if (tblBill.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "The table is empty.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Please, Select any single row before remove it.");
+            }
+        }
+
+        updateAdvacePrice();
+        updatePrice();
+        updateTotalPrice();
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void btnClearAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearAllActionPerformed
         // TODO add your handling code here:
+        int numRows = tblBill.getRowCount();
+        DefaultTableModel model1 = (DefaultTableModel) tblBill.getModel();
 
+        if (tblBill.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "The table is empty.");
+        } else {
+            // Remove rows from the table model
+            for (int i = numRows - 1; i >= 1; i--) {
+                model1.removeRow(i);
+            }
+
+            lblAdvance.setText("0.00");
+            lblPrice.setText("0.00");
+            lblTotalPrice.setText("0.00");
+        }
+
+        updateTotalPrice();
+        updateAdvacePrice();
+        updatePrice();
 
     }//GEN-LAST:event_btnClearAllActionPerformed
 
+    public String findshortpathAndPrint() {
+        int distance = 0;
+        String shortestPath = "null";
+        if (graph != null) {
+            // Destination location for which shortest path is to be found
+            String destination = (String) tfCity.getText();
+
+            // Create an instance of DijkstraAlgorithm
+            DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm();
+
+            // Find shortest path from branch to the destination city
+            distance = dijkstraAlgorithm.findShortestDistanceToLocation(graph, locations, destination);
+            shortestPath = dijkstraAlgorithm.findShortestPathToLocation(graph, locations, destination);
+
+        } else {
+            System.out.println("Graph is empty");
+        }
+        int km = 0;
+        if (distance == 0) {
+            km = 10;
+        } else if (distance != 0) {
+            km = 10 * distance;
+        }
+
+        txtArea.setText("Days to Import the car from " + Source + " to Sri lanka " + importDay + " days." + "\nShortest path root: " + shortestPath + "\nShortest path destination: " + km + "km");
+        return ("\nShortest path root from branch to customer: " + shortestPath + "\nShortest path destination: " + km + "km");
+
+    }
 
     private void btnOrderNow1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderNow1ActionPerformed
         // TODO add your handling code here:
+        String data = txtArea.getText();
+        String firstName = tffName.getText();
+        String lastName = tflName.getText();
+        String fullName = firstName + " " + lastName;
+        String nicNo = tfnic.getText();
+        String telephone = tftelephone.getText();
+        String email = tfemail.getText();
+        String city = tfCity.getText();
+        String address = tfAddress.getText();
+        String place = address + ", " + city; // Added spaces between address parts
+        String deliveryPath = findshortpathAndPrint(); // Changed to camelCase
+
+        if (data.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || nicNo.isEmpty() || telephone.isEmpty() || email.isEmpty() || city.isEmpty() || address.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Some of personal details are empty. Please, check again.");
+        } else {
+            int numRows = tblBill.getRowCount();
+            String[][] totalItem = new String[numRows][2];
+
+            for (int i = 0; i < numRows; i++) {
+                String itemName = (String) tblBill.getValueAt(i, 0);
+                String price = tblBill.getValueAt(i, 1).toString(); // Directly convert Object to String
+                totalItem[i][0] = itemName;
+                totalItem[i][1] = price;
+            }
+
+            String information = "Full name: " + fullName + "\n"
+                    + "NIC no.: " + nicNo + "\n"
+                    + "Telephone: " + telephone + "\n"
+                    + "Email: " + email + "\n"
+                    + "Address: " + place + "\n"
+                    + deliveryPath + "\n";
+
+            int response = JOptionPane.showConfirmDialog(this, "Are you sure to confirm your order?\n" + information, "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+            if (response == JOptionPane.YES_OPTION) {
+                System.out.println("--------------------------------------------------------------------------------------------");
+                System.out.println("Full name: " + fullName + "\n"
+                        + "NIC no.: " + nicNo + "\n"
+                        + "Telephone: " + telephone + "\n"
+                        + "Email: " + email + "\n"
+                        + "Address: " + place + "\n"
+                        + deliveryPath + "\n"
+                );
+                System.out.println("\t Item \t\t Price");
+                for (int i = 0; i < numRows; i++) {
+                    System.out.println(totalItem[i][0] + "\t" + totalItem[i][1]);
+                }
+                System.out.println("--------------------------------------------------------------------------------------------");
+                JOptionPane.showMessageDialog(this, "Your order is confirmed. Thank you", "Message", JOptionPane.INFORMATION_MESSAGE);
+
+                //send a email to customer about the order details
+                String to_email = email;  //livirunavaratna@gmail.com
+                String from_email = "poschecar0@gmail.com";
+                String from_email_password = "banb ipbh ozof fukp";
+                String subject = carName;
+                String details = carName + "-------------" + carPrice + "\n"
+                        + "Full name: " + fullName + "\n"
+                        + "NIC no.: " + nicNo + "\n"
+                        + "Telephone: " + telephone + "\n"
+                        + "Email: " + email + "\n"
+                        + "Address: " + place + "\n"
+                        + deliveryPath + "\n";
+
+                Properties properties = new Properties();
+                properties.put("mail.smtp.auth", "true");
+                properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+                properties.put("mail.smtp.starttls.enable", "true");
+                properties.put("mail.smtp.host", "smtp.gmail.com");
+                properties.put("mail.smtp.port", "587");
+                properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
+
+
+                Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(from_email, from_email_password);
+                    }
+                });
+
+                try {
+                    MimeMessage message = new MimeMessage(session);
+                    message.setFrom(new InternetAddress(from_email));
+                    message.addRecipient(Message.RecipientType.TO, new InternetAddress(to_email));
+                    message.setSubject(subject);
+                    message.setText(details);
+                    Transport.send(message);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                //Store table values in a NodeArry
+                ArrayNode[] array = new ArrayNode[numRows];
+                for (int i = 0; i < numRows; i++) {
+                    String itemName = (String) tblBill.getValueAt(i, 0);
+                    double price = (double) tblBill.getValueAt(i, 1); // Directly convert Object to String
+                    ArrayNode newNode = new ArrayNode(itemName, price);
+                    array[i] = newNode;
+                }
+
+//            for(int i = 0;i<array.length;i++){
+//                ArrayNode node = array[i];
+//                System.out.println(node.item+" "+node.price);
+//            }
+                linkedList.insertAtBack(fullName, nicNo, telephone, email, address, data, array);
+                linkedList.display();
+
+                tffName.setText("");
+                tflName.setText("");
+                tfnic.setText("");
+                tftelephone.setText("");
+                tfemail.setText("");
+                tfCity.setText("");
+                tfAddress.setText("");
+                int numRows1 = tblSelectItem.getRowCount();
+                // Get the table model
+                DefaultTableModel model = (DefaultTableModel) tblSelectItem.getModel();
+
+                // Remove rows from the table model
+                for (int i = numRows1 - 1; i >= 0; i--) {
+                    model.removeRow(i);
+                }
+                // Get the table model
+                DefaultTableModel model1 = (DefaultTableModel) tblBill.getModel();
+
+                // Remove rows from the table model
+                for (int i = numRows - 1; i >= 1; i--) {
+                    model1.removeRow(i);
+                }
+                lblTotalPrice.setText("0.00");
+                lblAdvance.setText("0.00");
+
+                MainPage page = new MainPage(linkedList, bodyColorlist, rimAndTyersList, seatsList, lightList);
+                page.setVisible(true);
+                page.pack();
+                page.setLocationRelativeTo(null);
+                this.dispose();
+            }
+        }
 
     }//GEN-LAST:event_btnOrderNow1ActionPerformed
 
@@ -1271,8 +1603,142 @@ public class CustomizationPage extends javax.swing.JFrame {
 
     private void tfAddressMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tfAddressMouseClicked
         // TODO add your handling code here:
-
+        if (tfCity.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please add customer city before add the address.");
+        } else {
+            findshortpathAndPrint();
+        }
     }//GEN-LAST:event_tfAddressMouseClicked
+
+    private void tffNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffNameKeyTyped
+        // TODO add your handling code here:
+//        char c = evt.getKeyChar();
+//        if (!Character.isLetter(c) && !Character.isWhitespace(c)) {
+//            evt.consume();
+//            tffName.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+//            tflName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfnic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tftelephone.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfemail.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfCity.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfAddress.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//        } else {
+//            tffName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//        }
+    }//GEN-LAST:event_tffNameKeyTyped
+
+    private void tflNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tflNameKeyTyped
+        // TODO add your handling code here:
+//        char c = evt.getKeyChar();
+//        if (!Character.isLetter(c) && !Character.isWhitespace(c)) {
+//            evt.consume();
+//            tflName.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+//            tffName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfnic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tftelephone.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfemail.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfCity.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfAddress.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//        } else {
+//            tflName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//        }
+    }//GEN-LAST:event_tflNameKeyTyped
+
+    private void tfCityKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfCityKeyTyped
+        // TODO add your handling code here:
+//        char c = evt.getKeyChar();
+//        if (!Character.isLetter(c) && !Character.isWhitespace(c)) {
+//            evt.consume();
+//            tfCity.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+//            tffName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfnic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tftelephone.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfemail.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tffName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfAddress.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//        } else {
+//            tfCity.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//        }
+    }//GEN-LAST:event_tfCityKeyTyped
+
+    private void tfnicKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfnicKeyTyped
+        // TODO add your handling code here:
+//        if (tfnic.getText().length() <= 9) {
+//            tfnic.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+//            tffName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfCity.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tftelephone.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfemail.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tffName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfAddress.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//        } else {
+//            tfnic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//        }
+    }//GEN-LAST:event_tfnicKeyTyped
+
+    private void tftelephoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tftelephoneKeyTyped
+        // TODO add your handling code here:
+//        char c = evt.getKeyChar();
+//
+//        if (!Character.isDigit(c) && c != '.') {
+//            evt.consume();
+//            tftelephone.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+//            tflName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfnic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tffName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfemail.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfCity.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfAddress.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//        } else if (tftelephone.getText().length() < 9 || tftelephone.getText().length() >= 10) {
+//            tftelephone.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+//            tflName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfnic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tffName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfemail.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfCity.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfAddress.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//        } else {
+//            tftelephone.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//        }
+    }//GEN-LAST:event_tftelephoneKeyTyped
+
+    private void tfAddressKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfAddressKeyTyped
+        // TODO add your handling code here:
+//        if (tfAddress.getText().length() <= 11) {
+//            tfAddress.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+//            tffName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfCity.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tftelephone.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfemail.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tffName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfnic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//        } else {
+//            tfAddress.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//        }
+    }//GEN-LAST:event_tfAddressKeyTyped
+
+    private void tfemailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfemailKeyTyped
+        // TODO add your handling code here:
+//        String email = tfemail.getText();
+//
+//        // Regular expression pattern for basic email validation
+//        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+//
+//        Pattern pattern = Pattern.compile(emailRegex);
+//        Matcher matcher = pattern.matcher(email);
+//
+//        if (tfemail.getText().isEmpty()) {
+//            tfemail.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+//            tffName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfCity.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tftelephone.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfAddress.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tffName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            tfnic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//        } else {
+//            tfemail.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//        }
+    }//GEN-LAST:event_tfemailKeyTyped
 
     private void btnBodyColorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBodyColorMouseEntered
         // TODO add your handling code here:
@@ -1337,6 +1803,123 @@ public class CustomizationPage extends javax.swing.JFrame {
         // Change text color
         btnLights.setForeground(Color.white);
     }//GEN-LAST:event_btnLightsMouseExited
+
+    private void btnRemoveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRemoveMouseEntered
+        // TODO add your handling code here:
+        btnRemove.setBackground(Color.white);
+
+        // Change text color
+        btnRemove.setForeground(Color.red);
+    }//GEN-LAST:event_btnRemoveMouseEntered
+
+    private void btnRemoveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRemoveMouseExited
+        // TODO add your handling code here:
+        btnRemove.setBackground(Color.red);
+
+        // Change text color
+        btnRemove.setForeground(Color.white);
+    }//GEN-LAST:event_btnRemoveMouseExited
+
+    private void btnClearAllMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClearAllMouseEntered
+        // TODO add your handling code here:
+        btnClearAll.setBackground(Color.white);
+
+        // Change text color
+        btnClearAll.setForeground(Color.red);
+    }//GEN-LAST:event_btnClearAllMouseEntered
+
+    private void btnClearAllMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClearAllMouseExited
+        // TODO add your handling code here:
+        btnClearAll.setBackground(Color.red);
+
+        // Change text color
+        btnClearAll.setForeground(Color.white);
+    }//GEN-LAST:event_btnClearAllMouseExited
+
+    private void btnOrderNow1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOrderNow1MouseEntered
+        // TODO add your handling code here:
+        btnOrderNow1.setBackground(Color.white);
+
+        // Change text color
+        btnOrderNow1.setForeground(Color.green);
+    }//GEN-LAST:event_btnOrderNow1MouseEntered
+
+    private void btnOrderNow1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOrderNow1MouseExited
+        // TODO add your handling code here:
+        btnOrderNow1.setBackground(Color.green);
+
+        // Change text color
+        btnOrderNow1.setForeground(Color.white);
+    }//GEN-LAST:event_btnOrderNow1MouseExited
+
+    private void btnOrderNow1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOrderNow1MouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_btnOrderNow1MouseClicked
+
+    private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
+        // TODO add your handling code here:
+        jButton6.setBackground(Color.white);
+
+        // Change text color
+        jButton6.setForeground(Color.darkGray);
+    }//GEN-LAST:event_jButton6MouseEntered
+
+    private void jButton6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseExited
+        // TODO add your handling code here:
+        jButton6.setBackground(Color.darkGray);
+
+        // Change text color
+        jButton6.setForeground(Color.white);
+    }//GEN-LAST:event_jButton6MouseExited
+
+    private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
+        // TODO add your handling code here:
+        jButton7.setBackground(Color.white);
+
+        // Change text color
+        jButton7.setForeground(Color.darkGray);
+    }//GEN-LAST:event_jButton7MouseEntered
+
+    private void jButton7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseExited
+        // TODO add your handling code here:
+        jButton7.setBackground(Color.darkGray);
+
+        // Change text color
+        jButton7.setForeground(Color.white);
+    }//GEN-LAST:event_jButton7MouseExited
+
+    private void jButton8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseEntered
+        // TODO add your handling code here:
+        jButton8.setBackground(Color.white);
+
+        // Change text color
+        jButton8.setForeground(Color.darkGray);
+    }//GEN-LAST:event_jButton8MouseEntered
+
+    private void jButton8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseExited
+        // TODO add your handling code here:
+        jButton8.setBackground(Color.darkGray);
+
+        // Change text color
+        jButton8.setForeground(Color.white);
+    }//GEN-LAST:event_jButton8MouseExited
+
+    private void jButton9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseEntered
+        // TODO add your handling code here:
+        jButton9.setBackground(Color.white);
+
+        // Change text color
+        jButton9.setForeground(Color.darkGray);
+    }//GEN-LAST:event_jButton9MouseEntered
+
+    private void jButton9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseExited
+        // TODO add your handling code here:
+        jButton9.setBackground(Color.darkGray);
+
+        // Change text color
+        jButton9.setForeground(Color.white);
+    }//GEN-LAST:event_jButton9MouseExited
 
     /**
      * @param args the command line arguments

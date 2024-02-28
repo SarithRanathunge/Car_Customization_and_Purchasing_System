@@ -3,14 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package singlyLinkedList;
-
 import nodeArray.ArrayNode;
-
 /**
  *
  * @author Sarith
  */
 public class LinkedListNode {
+
     public String fullName;
     public String NIC;
     public String telephone;

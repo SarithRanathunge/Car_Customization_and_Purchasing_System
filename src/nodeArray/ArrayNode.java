@@ -9,11 +9,10 @@ package nodeArray;
  * @author Sarith
  */
 public class ArrayNode {
-
     public String item;
     public double price;
-
-    public ArrayNode(String item, double price) {
+    
+    public  ArrayNode(String item, double  price){
         this.item = item;
         this.price = price;
     }
