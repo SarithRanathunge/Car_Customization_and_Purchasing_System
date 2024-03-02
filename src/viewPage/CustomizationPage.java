@@ -125,6 +125,10 @@ public class CustomizationPage extends javax.swing.JFrame {
         times();
         setIcon();
         reSizeTableColumn();
+        
+        carName = name;
+        carPrice = price;
+        
         this.importDay = importDay;
         this.Source = source;
         txtArea.setText("Days to Import the car from " + source + " to Sri lanka " + importDay + " days.");
@@ -1495,19 +1499,28 @@ public class CustomizationPage extends javax.swing.JFrame {
                         + "Address: " + place + "\n"
                         + deliveryPath + "\n"
                 );
+                String itemAndPrice = null;
                 System.out.println("\t Item \t\t Price");
                 for (int i = 0; i < numRows; i++) {
                     System.out.println(totalItem[i][0] + "\t" + totalItem[i][1]);
+                    String value = totalItem[i][0] + "\t" + totalItem[i][1]+"\n";
+                    itemAndPrice = itemAndPrice + value;
                 }
                 System.out.println("--------------------------------------------------------------------------------------------");
                 JOptionPane.showMessageDialog(this, "Your order is confirmed. Thank you", "Message", JOptionPane.INFORMATION_MESSAGE);
 
                 //send a email to customer about the order details
-                String to_email = email;  //livirunavaratna@gmail.com
+                String to_email = "sarithperera14@gmail.com";
                 String from_email = "poschecar0@gmail.com";
-                String from_email_password = "banb ipbh ozof fukp";
+                String from_email_password = "cqis mlnk unbb toyp";
                 String subject = carName;
-                String details = carName + "-------------" + carPrice + "\n"
+                String details = "Car Name: " +carName + "\n" 
+                        + "Car Price: " +carPrice + "\n"
+                        + "Number of items added:" + numRows +"\n"
+                        + "Each Item and Price:\n" + itemAndPrice +"\n"
+                        +"Advance payment" + lblAdvance.getText()+"\n"
+                        +"Total Cost: " + lblTotalPrice.getText()+"\n"
+                        +"Price: " + lblPrice.getText()+"\n"
                         + "Full name: " + fullName + "\n"
                         + "NIC no.: " + nicNo + "\n"
                         + "Telephone: " + telephone + "\n"

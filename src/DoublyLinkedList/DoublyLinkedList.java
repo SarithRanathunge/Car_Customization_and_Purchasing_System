@@ -14,10 +14,12 @@ public class DoublyLinkedList {
     public Node head;
     public Node tail;
     
+    //constructor
     public DoublyLinkedList(){
         head = null;
         tail = null;
     }
+    
     
     public void insertAtEnd(String item, double price){
         Node newNode = new Node(item, price);
