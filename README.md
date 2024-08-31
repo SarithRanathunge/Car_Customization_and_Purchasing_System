@@ -1,4 +1,4 @@
-# Car-Customization-and-Purchasing-System
+# Car_customization_and_purchasing_system
 This project is a Car Customization and Purchasing System! 🚗💻 Built with data structures &amp; algorithms, it offers seamless vehicle customization &amp; purchase.
 
 ### | Contributors: [SarithRanathunge](https://github.com/SarithRanathunge) & [TharunPerera](https://github.com/TharunPerera)
